@@ -1,0 +1,25 @@
+{
+ "sample": true,
+ "updated": null,
+ "categories": {"bridge": "교량", "tunnel": "터널·지하", "road": "도로", "rail": "철도", "port": "항만·공항", "water": "수자원", "safety": "지반·안전", "industry": "정책·업계"},
+ "items": [
+  {"id": "s01", "title": "해상 사장교 주탑 시공 마무리 단계… 상판 연결 공정 착수", "link": "#", "source": "예시 기사", "published": "-1h", "category": "bridge"},
+  {"id": "s02", "title": "대심도 지하 고속도로 TBM 굴진 구간 절반 넘어서", "link": "#", "source": "예시 기사", "published": "-2h", "category": "tunnel"},
+  {"id": "s03", "title": "광역철도 2공구 노반 공사 착공… 복선 전철화 본격화", "link": "#", "source": "예시 기사", "published": "-3h", "category": "rail"},
+  {"id": "s04", "title": "도심 싱크홀 잇따라… 노후 하수관로 일제 안전점검 실시", "link": "#", "source": "예시 기사", "published": "-4h", "category": "safety"},
+  {"id": "s05", "title": "내년 SOC 예산안 확정… 도로·철도 신규 사업 비중 확대", "link": "#", "source": "예시 기사", "published": "-5h", "category": "industry"},
+  {"id": "s06", "title": "신항 방파제 2단계 공사 준공… 접안 능력 두 배로", "link": "#", "source": "예시 기사", "published": "-6h", "category": "port"},
+  {"id": "s07", "title": "국가하천 제방 보강 사업 발주… 홍수 대비 치수 능력 강화", "link": "#", "source": "예시 기사", "published": "-7h", "category": "water"},
+  {"id": "s08", "title": "국도 우회도로 확장 공사 완공… 상습 정체 구간 해소 기대", "link": "#", "source": "예시 기사", "published": "-8h", "category": "road"},
+  {"id": "s09", "title": "노후 교량 내진 보강 공사 본격화… 교각 단면 확대 공법 적용", "link": "#", "source": "예시 기사", "published": "-10h", "category": "bridge"},
+  {"id": "s10", "title": "도심 지하차도 설계 착수… 지상부는 공원으로 조성", "link": "#", "source": "예시 기사", "published": "-12h", "category": "tunnel"},
+  {"id": "s11", "title": "기술형입찰 토목 수주 경쟁 치열… 턴키 낙찰 방식 개선 논의", "link": "#", "source": "예시 기사", "published": "-14h", "category": "industry"},
+  {"id": "s12", "title": "도시철도 연장선 정거장 구조물 공사 착공", "link": "#", "source": "예시 기사", "published": "-18h", "category": "rail"},
+  {"id": "s13", "title": "급경사지 옹벽 균열 발견… 사면 보강 공사 긴급 시행", "link": "#", "source": "예시 기사", "published": "-20h", "category": "safety"},
+  {"id": "s14", "title": "다목적댐 리모델링 설계 완료… 여수로 확장 공사 내년 착공", "link": "#", "source": "예시 기사", "published": "-23h", "category": "water"},
+  {"id": "s15", "title": "고속도로 신설 구간 포장 공사 마무리… 연내 개통 목표", "link": "#", "source": "예시 기사", "published": "-26h", "category": "road"},
+  {"id": "s16", "title": "신공항 활주로 부지 매립 공사 공정률 40% 돌파", "link": "#", "source": "예시 기사", "published": "-30h", "category": "port"},
+  {"id": "s17", "title": "스마트 건설기술 현장 적용 확대… 토목 공사에 디지털 트윈 도입", "link": "#", "source": "예시 기사", "published": "-34h", "category": "industry"},
+  {"id": "s18", "title": "현수교 케이블 정밀 안전점검 결과 발표… 보수 공사 진행", "link": "#", "source": "예시 기사", "published": "-40h", "category": "bridge"}
+ ]
+}

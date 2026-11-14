@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>토목 데일리</title>
+  <meta name="description" content="교량·터널·도로·철도·항만·수자원·지반 등 토목 분야 기사만 모아 보는 뉴스 홈페이지">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23c2410c'/%3E%3Cpath d='M4 22h24M7 22V14M25 22V14M4 14q12-10 24 0M13 22v-6M19 22v-6' stroke='white' stroke-width='2' fill='none'/%3E%3C/svg%3E">
+</head>
+<body>
+  <header class="masthead">
+    <div class="wrap masthead-top">
+      <span id="today" class="meta"></span>
+      <button id="themeToggle" class="theme-toggle" type="button" aria-label="다크 모드 전환">◐</button>
+    </div>
+    <div class="wrap brand">
+      <h1><a href="./">토목 데일리</a></h1>
+      <p class="tagline">CIVIL ENGINEERING DAILY · 토목 기사만 모았습니다</p>
+    </div>
+    <nav class="wrap catnav" id="catnav" aria-label="분야"></nav>
+  </header>
+
+  <div class="wrap toolbar">
+    <label class="search">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="search" type="search" placeholder="기사 제목 검색 (예: 교량, GTX, 싱크홀)" autocomplete="off">
+    </label>
+    <span id="updated" class="meta"></span>
+  </div>
+
+  <div class="wrap"><div id="notice" class="notice" hidden></div></div>
+
+  <main class="wrap layout">
+    <section id="content" aria-live="polite"></section>
+    <aside class="sidebar">
+      <section class="panel">
+        <h2>분야별 기사</h2>
+        <ul id="stats" class="stats"></ul>
+      </section>
+      <section class="panel">
+        <h2>최신 헤드라인</h2>
+        <ol id="latest" class="latest"></ol>
+      </section>
+    </aside>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <p>토목 데일리는 공개된 뉴스 검색 결과에서 토목 관련 기사 제목과 링크만 자동으로 모아 보여줍니다. 기사 저작권은 각 언론사에 있습니다.</p>
+    </div>
+  </footer>
+
+  <script src="assets/app.js"></script>
+</body>
+</html>
