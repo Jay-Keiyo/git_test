@@ -8,7 +8,6 @@
 | --- | --- |
 | `index.html`, `assets/` | 홈페이지 (빌드 없는 정적 HTML/CSS/JS) |
 | `scripts/fetch_news.py` | Google 뉴스 RSS에서 분야별로 검색 → 토목 기사만 걸러 `data/news.json` 저장 |
-| `.github/workflows/update-news.yml` | 3시간마다 위 스크립트를 실행하고 결과를 커밋 |
 | `data/sample.json` | `news.json`이 아직 없을 때 보여주는 예시 데이터 (화면에 "예시" 안내 표시) |
 
 ### 토목 기사 판별 방식
@@ -19,8 +18,7 @@
 
 ## 사용 방법
 
-1. **자동 수집 켜기** — GitHub 저장소의 *Actions* 탭에서 `Update civil engineering news` 워크플로를 열고 **Run workflow**로 한 번 실행합니다. 이후 3시간마다 자동 실행됩니다.
-   (예약 실행은 저장소의 기본 브랜치에서만 동작합니다.)
+1. **기사 수집** — 자동 수집은 꺼져 있습니다. 필요할 때 `python3 scripts/fetch_news.py`를 직접 실행하세요.
 2. **홈페이지 공개** — *Settings → Pages*에서 *Deploy from a branch*, 기본 브랜치의 `/ (root)`를 선택하면 `https://<계정>.github.io/<저장소>/`에서 볼 수 있습니다.
 
 ### 로컬에서 보기

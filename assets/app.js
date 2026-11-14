@@ -187,7 +187,7 @@
     if (data.sample) {
       const notice = $("#notice");
       notice.hidden = false;
-      notice.textContent = "지금 보이는 기사는 화면 구성을 보여주기 위한 예시입니다. 자동 수집(GitHub Actions)이 처음 실행되면 실제 토목 기사로 바뀝니다.";
+      notice.textContent = "지금 보이는 기사는 화면 구성을 보여주기 위한 예시입니다. scripts/fetch_news.py를 실행하면 실제 토목 기사로 바뀝니다.";
     } else if (data.updated) {
       $("#updated").textContent = `마지막 업데이트 ${ago(new Date(data.updated))}`;
     }
