@@ -11,7 +11,7 @@
 | 머리 | 머리카락 없음. 정수리에서 **나무**가 자람 → 직급이 오를수록 커짐 |
 | 옷 | 평범한 한국 공공기관 직장인 복장 + 사원증 목걸이 |
 | 톤 | 3D 애니메이션풍 만화 캐릭터 (실사 X). 흙 질감은 살리되 얼굴은 단순하고 표정이 큰 만화 비율 |
-| 흙 종류 | 인물마다 토질을 다르게 해서 한눈에 구분 (이름도 토질에서 따옴) |
+| 흙 종류 | 인물마다 토질을 다르게 해서 한눈에 구분 |
 
 ### 직급별 머리 나무
 
@@ -25,7 +25,7 @@
 | 처장 | 어깨너비를 넘는 큰 나무, 굵은 뿌리가 이마까지 내려옴 |
 | 본부장 | 화면 위를 뚫고 나가는 거목, 이끼·새 둥지 |
 
-> **확정 규칙 (시안 반영)**: 직급은 정수리에서 **위로 솟은** 식물의 높이로만 구분한다. 여성 캐릭터는 아래로 늘어지는 잎사귀 머리를 가질 수 있고, 이는 직급과 무관하다. 이점토 대리 = 잎사귀 머리 + 위로 솟은 흰 꽃봉오리 하나.
+> **확정 규칙 (시안 반영)**: 직급은 정수리에서 **위로 솟은** 식물의 높이로만 구분한다. 여성 캐릭터는 아래로 늘어지는 잎사귀 머리를 가질 수 있고, 이는 직급과 무관하다. 이정원 대리 = 잎사귀 머리 + 위로 솟은 흰 꽃봉오리 하나.
 
 ### 공통 프롬프트 블록 (모든 인물 프롬프트 맨 앞에 붙임)
 
@@ -71,7 +71,7 @@ dirt falling from the cheeks, dark hollow under-eyes, the sprouts on his head wi
 loosened lanyard, slumped shoulders, empty stare. Fluorescent office light at night.
 ```
 
-## 2. 박양토 대리 (30대 초반 남, 입사 4년차)
+## 2. 박토양 대리 (30대 초반 남, 입사 4년차)
 
 - 토질: **검고 기름진 양토** — 믿음직한 색
 - 나무: 한 뼘 묘목, 잎이 튼튼함
@@ -86,7 +86,7 @@ shirt with sleeves rolled up, charcoal slacks, ID lanyard, holding a thick docum
 in the other. Waist-up portrait, plain light-gray studio background.
 ```
 
-## 3. 이점토 대리 (20대 후반 여, 입사 2년차·경력직)
+## 3. 이정원 대리 (20대 후반 여, 입사 2년차·경력직)
 
 - 토질: **매끈한 붉은 점토** — 단단하고 정돈됨
 - 나무: 한 뼘 묘목, 깔끔하게 다듬어진 모양
@@ -102,7 +102,7 @@ leaves. Wearing a beige blouse, black slacks, ID lanyard, holding a tablet. Wais
 studio background.
 ```
 
-## 4. 최암반 과장 (40대 후반 남)
+## 4. 최태산 과장 (40대 후반 남)
 
 - 토질: **자갈 섞인 단단한 회갈색 암반토** — 거칠고 깊게 갈라짐
 - 나무: 30cm, 가지가 뻣뻣하고 가시 돋은 어린 나무
@@ -117,7 +117,7 @@ square jaw, narrowed judging eyes, one eyebrow raised, mouth pressed in disappro
 white dress shirt, ID lanyard, arms crossed. Waist-up portrait, plain light-gray studio background.
 ```
 
-## 5. 한사질 차장 (40대 초반 남)
+## 5. 이모래 차장 (40대 초반 남)
 
 - 토질: **연한 모래빛 사질토** — 부슬부슬, 살짝 흘러내림
 - 나무: 50cm, 한쪽으로 살짝 기운 수수한 나무 (가지에 작은 피규어 키링 하나)
@@ -133,7 +133,7 @@ shirt buttoned all the way to the top, khaki pants, an old backpack, ID lanyard.
 studio background.
 ```
 
-## 6. 강풍화 부장 (50대 중반 남)
+## 6. 조궁화 부장 (50대 중반 남)
 
 - 토질: **누런 풍화토(마사토)** — 겉은 번지르르한데 만지면 바스러짐
 - 나무: 머리보다 큰 풍성한 나무. **기분 좋을 땐 꽃이 피고, 기분 나쁠 땐 잎이 붉게 시들어 떨어짐** (기분파 연출 장치)
