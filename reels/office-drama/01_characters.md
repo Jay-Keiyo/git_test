@@ -6,11 +6,11 @@
 
 | 규칙 | 내용 |
 |---|---|
-| 몸 | 얼굴·목·손 등 드러난 피부 전체가 **진짜 흙** (입자, 잔금, 잔자갈, 잔뿌리가 보이는 무광 질감). 골격·비율·표정은 실제 사람 그대로 |
-| 눈 | 사람 눈 그대로 (감정 연기가 여기서 나옴) |
+| 몸 | 얼굴·목·손 등 드러난 피부 전체가 **진짜 흙** (입자, 잔금, 잔자갈, 잔뿌리가 보이는 무광 질감). 사람 피부는 어디에도 없음 |
+| 눈 | 크고 표정이 풍부한 만화 눈 (감정 연기가 여기서 나옴) |
 | 머리 | 머리카락 없음. 정수리에서 **나무**가 자람 → 직급이 오를수록 커짐 |
 | 옷 | 평범한 한국 공공기관 직장인 복장 + 사원증 목걸이 |
-| 톤 | 실사 사진. 만화·3D·클레이 애니 느낌 금지 |
+| 톤 | 3D 애니메이션풍 만화 캐릭터 (실사 X). 흙 질감은 살리되 얼굴은 단순하고 표정이 큰 만화 비율 |
 | 흙 종류 | 인물마다 토질을 다르게 해서 한눈에 구분 (이름도 토질에서 따옴) |
 
 ### 직급별 머리 나무
@@ -28,12 +28,12 @@
 ### 공통 프롬프트 블록 (모든 인물 프롬프트 맨 앞에 붙임)
 
 ```
-Photorealistic cinematic photograph, 50mm lens, shallow depth of field, soft natural light, 9:16 vertical.
-A humanoid Korean office worker whose entire body — face, neck, ears, hands — is made of real compacted soil
-instead of skin: visible soil grains, fine dry cracks, tiny pebbles and thin root fibers, matte earthy texture.
-Realistic human bone structure, proportions and subtle facial expressions, realistic dark human eyes.
-No hair at all; a living plant grows directly out of the top of the head.
-Looks like a real photo of a living being. Not a cartoon, not a 3D render, not claymation, no text, no watermark.
+Stylized 3D animated film still, high-quality character animation look, soft global illumination, 9:16 vertical.
+A cartoon humanoid Korean office worker whose whole body is sculpted out of soil, like a living clay-and-dirt figure:
+face, neck, ears and hands are all brown earth with visible soil grains, small cracks, tiny pebbles and thin root
+fibers. Absolutely no human skin anywhere. Simplified appealing cartoon proportions: slightly large head, big
+expressive eyes, simple nose and mouth. No hair at all; a living plant grows directly out of the bare soil scalp.
+Clean shapes, readable silhouette, original character design, no text, no watermark.
 ```
 
 ---
