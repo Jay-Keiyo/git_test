@@ -117,7 +117,7 @@ square jaw, narrowed judging eyes, one eyebrow raised, mouth pressed in disappro
 white dress shirt, ID lanyard, arms crossed. Waist-up portrait, plain light-gray studio background.
 ```
 
-## 5. 이모래 차장 (40대 초반 남)
+## 5. 이난초 차장 (40대 초반 남)
 
 - 토질: **연한 모래빛 사질토** — 부슬부슬, 살짝 흘러내림
 - 나무: 50cm, 한쪽으로 살짝 기운 수수한 나무 (가지에 작은 피규어 키링 하나)
