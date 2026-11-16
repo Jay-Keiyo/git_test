@@ -25,11 +25,14 @@
 | 6 | 8 | S5 | `Very slow dramatic zoom into the bottom row of the table until the last cell fills the screen. Everything else blurs. Low ominous hum.` | (정적) |
 | 7 | 8 | S6 | `Extreme close-up. His smile stays frozen while his eyes slowly widen. The cowlick on top of his hair bends and flops sideways. He blinks twice. Silence, then a tiny comedic crack sound.` | "…나무읍?" |
 | 8 | 10 | S9 | `The route line draws itself slowly from the top pin down to the bottom pin. The camera drifts down following the line, then settles on the travel-time card. Subtle map zoom-out. Comedic falling whistle sound.` | "…읍?" |
+| 8-1 | 3 | S10 | `Close-up of hands typing fast on the keyboard, frantic and slightly clumsy. Loud mechanical key clacks, ending with a hard hit on the Enter key.` | 효과음: 타자, 엔터 |
+| 8-2 | 4 | S11 | `Static shot of the monitor, the cursor blinks in the empty search box.` (편집에서 "한국자연공사 나무읍지사"를 한 글자씩 타이핑 효과로 얹음) | — |
+| 8-3 | 5 | S12 | `The mouse cursor trembles, hesitates above the button, then clicks it. The button presses in. The screen flashes white.` | 효과음: 딸깍 |
 | 9 | 8 | S7 | `Slow creeping push-in toward the shabby building, like a street-view image coming alive. Grass sways, a crow flies across, an old air conditioner rattles. Overcast, lonely.` | 효과음: 까마귀 |
 | 10 | 12 | S8 | `The monitor is off. He takes a long deep breath, forces a smile and nods to himself. The bent cowlick tries to stand up and droops again. Soft hopeful piano starts.` | "설마… 가보면 다르겠지. 처음부터 겁먹지 말자." |
 | 11 | 8 | 편집 | 검은 화면 + 타이틀 「흙수저 김토토」 / 입사 D-14 / 다음 화: 연수원 2주 | — |
 
-합계 약 87초 + 컷 사이 여백과 대사 호흡 = 100~110초.
+합계 약 99초 + 컷 사이 여백과 대사 호흡 = 110~120초.
 
 ## 3. 체크
 
