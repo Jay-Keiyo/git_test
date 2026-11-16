@@ -1,0 +1,243 @@
+{
+ "id": "ep1",
+ "no": "1",
+ "title": "합격",
+ "parts": [
+  {
+   "label": "1-1",
+   "title": "합격",
+   "ending": "\"나무읍 지사\" 글자가 읽히기 직전. 근무 예정지 칸은 모자이크로 가린다.",
+   "cuts": [
+    {
+     "img": "1",
+     "sec": 5,
+     "tool": "flow",
+     "screen": "어두운 방, 화면을 노려보다 마우스를 누름",
+     "line": "자막: 수험 생활 3년 / 토토: \"제발… 제발…\"",
+     "attach": "취업전 김토토",
+     "imagePrompt": "첨부한 캐릭터를 얼굴, 피부색, 검은 머리카락과 정수리의 삐친 머리 한 가닥까지 똑같이 유지해서 그려줘. 머리에 새싹이나 식물은 없어.\n캐릭터는 같은 3D 애니메이션 그림체, 배경은 사실적인 한국의 원룸. 세로 9:16.\n\n밤, 불 꺼진 좁은 원룸의 책상 앞. 모니터 불빛만 얼굴을 푸르게 비춰.\n회색 후드티를 입은 캐릭터가 의자에 앉아 마우스에 손을 올리고, 침을 삼키며 긴장한 눈으로 화면을 노려봐.\n책상에는 두꺼운 수험서 더미, 컵라면 용기, 포스트잇이 붙은 스탠드. 뒤로 작은 침대와 빨래 건조대가 어렴풋이 보여.\n카메라는 모니터 뒤쪽에서 캐릭터 정면을 보는 상반신 구도. 모니터는 뒷모습만 보여.\n얼굴은 화면 가운데보다 조금 위에 두고, 화면 맨 아래 20%에는 얼굴이나 손이 오지 않게 해줘. 글자와 워터마크 없이.",
+     "flowPrompt": "Stylized 3D animated film. The young man stares at the laptop screen, tense. He swallows hard, his finger trembles on the mouse. He whispers in Korean, \"제발… 제발…\", then clicks the mouse once. The single cowlick on top of his hair quivers.\nCamera: very slow push-in on his face. Lighting stays the same: dark room, blue screen glow.\nAudio: quiet room tone, one mouse click. A soft, slightly high young male voice. No music.\nNo subtitles, no on-screen text, no captions.",
+     "thumb": "ep1/01.webp"
+    },
+    {
+     "img": "2",
+     "sec": 4,
+     "tool": "edit",
+     "screen": "합격 화면, 천천히 확대",
+     "line": "효과음: 띠링",
+     "attach": "",
+     "imagePrompt": "세로 9:16 이미지를 만들어줘. 어두운 방에서 컴퓨터 모니터 화면을 정면으로 가까이 찍은 사진이야. 인물은 없어.\n\n모니터에는 깔끔한 공공기관 채용 홈페이지가 떠 있어. 흰 바탕에 파랑과 초록 포인트 색.\n화면에 들어갈 글자는 아래 네 줄뿐이고, 정확한 한글로 적어줘.\n맨 위 작은 글씨: 한국자연공사 신입사원 공개채용\n가운데 가장 큰 글씨: 최종 합격을 축하드립니다\n그 아래 중간 글씨: 김토토 님\n그 아래 작은 글씨: 기술직(5급)\n이 네 줄 외의 글자, 메뉴, 로고 문구는 넣지 마. 글자는 화면 가운데에 모아줘. 워터마크 없이.",
+     "flowPrompt": "",
+     "thumb": "ep1/02.webp"
+    },
+    {
+     "img": "3",
+     "sec": 5,
+     "tool": "flow",
+     "screen": "벌떡 일어나 두 주먹 치켜들고 환호",
+     "line": "토토: \"됐다!!! 붙었다!!!\"",
+     "attach": "취업전 김토토 + S1",
+     "imagePrompt": "첫 번째 이미지의 캐릭터를 얼굴, 피부색, 검은 머리카락까지 똑같이 유지하고, 두 번째 이미지와 같은 방, 같은 회색 후드티, 같은 조명으로 그려줘. 머리에 새싹이나 식물은 없어.\n캐릭터는 같은 3D 애니메이션 그림체, 배경은 사실적인 원룸. 세로 9:16.\n\n캐릭터가 의자에서 벌떡 일어나 두 주먹을 머리 위로 치켜들고, 눈을 질끈 감고 입을 크게 벌려 환호해.\n정수리의 삐친 머리 한 가닥이 곧게 쫙 서 있어. 의자는 뒤로 밀려나 있어.\n허벅지 위까지 보이는 구도이고, 치켜든 주먹이 화면 위에서 잘리지 않게 해줘.\n화면 맨 아래 20%에는 얼굴이나 손이 오지 않게 해줘. 글자와 워터마크 없이.",
+     "flowPrompt": "Stylized 3D animated film. The young man pumps both fists in the air and jumps up and down with joy, eyes squeezed shut, laughing. He shouts in Korean, \"됐다! 붙었다!\". The cowlick on top of his hair stands straight up.\nCamera: slight handheld shake, energetic. Same dark room with blue screen glow.\nAudio: his excited shout, a soft slightly high young male voice, chair wheels rolling. No music.\nNo subtitles, no on-screen text, no captions.",
+     "thumb": "ep1/03.webp"
+    },
+    {
+     "img": "4",
+     "sec": 7,
+     "tool": "flow",
+     "screen": "울면서 웃으며 통화",
+     "line": "토토: \"엄마! 나 붙었어! 응, 공기업! 정년 보장!\"",
+     "attach": "취업전 김토토 + S1",
+     "imagePrompt": "첫 번째 이미지의 캐릭터를 얼굴, 피부색, 검은 머리카락까지 똑같이 유지하고, 두 번째 이미지와 같은 방, 같은 회색 후드티, 같은 조명으로 그려줘. 머리에 새싹이나 식물은 없어.\n캐릭터는 같은 3D 애니메이션 그림체, 배경은 사실적인 원룸. 세로 9:16.\n\n캐릭터가 방 한가운데 서서 휴대폰을 귀에 대고 통화해. 눈물이 글썽한 채 활짝 웃고, 다른 손등으로 눈가를 훔쳐.\n정수리의 삐친 머리 한 가닥은 여전히 곧게 서 있어.\n상반신 구도, 얼굴은 화면 가운데보다 조금 위. 화면 맨 아래 20%에는 얼굴이나 손이 오지 않게 해줘. 글자와 워터마크 없이.",
+     "flowPrompt": "Stylized 3D animated film. The young man holds the phone to his ear, crying happy tears and laughing, wiping his eye with the back of his hand. He says in Korean, \"엄마! 나 붙었어! 응, 공기업! 정년 보장!\". He nods quickly while talking.\nCamera: gentle handheld, slow drift to the right. Same dark room.\nAudio: his tearful happy voice, a soft slightly high young male voice. No music.\nNo subtitles, no on-screen text, no captions.",
+     "thumb": "ep1/04.webp"
+    },
+    {
+     "img": "5",
+     "sec": 6,
+     "tool": "edit",
+     "screen": "안내 표를 훑어 내려가 모자이크 된 \"근무 예정지\" 줄로 확대",
+     "line": "토토(목소리만): \"어디 보자… 근무지가…\"",
+     "attach": "S2",
+     "imagePrompt": "첨부한 이미지와 같은 모니터, 같은 홈페이지 디자인과 색으로, 다른 페이지를 그려줘. 세로 9:16, 인물은 없어.\n\n화면에 들어갈 글자는 아래뿐이고, 정확한 한글로 적어줘.\n제목(큰 글씨): 합격자 등록 일정 및 장소 안내\n그 아래에 2칸짜리 단순한 표, 3행.\n1행: 등록 기간 | 11. 23. ~ 11. 27.\n2행: 연수원 입소 | 12. 1.\n3행: 근무 예정지 | 나무읍지사\n3행은 화면 가운데쯤에 오게 하고, \"나무읍지사\" 글자는 굵게.\n이 외의 글자, 메뉴, 로고 문구는 넣지 마. 워터마크 없이.",
+     "flowPrompt": "",
+     "thumb": "ep1/05.webp"
+    },
+    {
+     "img": "",
+     "sec": 3,
+     "tool": "edit",
+     "screen": "암전 + 자막 \"근무지는 2편에서\"",
+     "line": "음악 뚝 끊김",
+     "attach": "",
+     "imagePrompt": "",
+     "flowPrompt": ""
+    }
+   ],
+   "done": {
+    "img": true
+   }
+  },
+  {
+   "label": "1-2",
+   "title": "나무읍?",
+   "ending": "로드뷰 버튼을 누른 직후. \"건물은 좋네\"라는 기대를 깔아 놓고 결과를 안 보여 준다.",
+   "cuts": [
+    {
+     "img": "5",
+     "sec": 3,
+     "tool": "edit",
+     "screen": "지난 이야기: 모자이크가 걷히며 \"나무읍 지사\"가 드러남",
+     "line": "토토(목소리만): \"근무지가…\"",
+     "attach": "",
+     "imagePrompt": "",
+     "flowPrompt": "",
+     "thumb": "ep1/05.webp"
+    },
+    {
+     "img": "6",
+     "sec": 5,
+     "tool": "flow",
+     "screen": "웃는 얼굴 그대로 굳음. 눈만 커지고 삐친 머리가 꺾임",
+     "line": "토토: \"…나무읍?\" / \"거기가… 어디야?\"",
+     "attach": "취업전 김토토 + S1",
+     "imagePrompt": "첫 번째 이미지의 캐릭터를 얼굴, 피부색, 검은 머리카락까지 똑같이 유지하고, 두 번째 이미지와 같은 방, 같은 회색 후드티, 같은 조명으로 그려줘. 머리에 새싹이나 식물은 없어.\n캐릭터는 같은 3D 애니메이션 그림체. 세로 9:16.\n\n얼굴 클로즈업. 활짝 웃던 입 모양이 그대로 굳었고, 눈은 동그랗게 커져서 화면 한 곳에 고정됐어. 이마에 식은땀 한 방울.\n정수리의 삐친 머리 한 가닥이 힘없이 꺾여 옆으로 누웠어. 모니터 불빛이 얼굴에 푸르게 비쳐.\n머리 꼭대기부터 어깨까지 보이는 구도, 얼굴이 화면 가운데보다 조금 위. 글자와 워터마크 없이.",
+     "flowPrompt": "Stylized 3D animated film. The young man's wide smile stays frozen on his face while his eyes slowly grow wider. A drop of sweat runs down his temple. The cowlick on top of his hair slowly bends and flops to the side. After a pause he says quietly in Korean, \"…나무읍?\", then, \"거기가… 어디야?\". He blinks twice.\nCamera: locked-off close-up, no movement. Blue screen glow on his face.\nAudio: dead silence, then his small confused voice, a soft slightly high young male voice. No music.\nNo subtitles, no on-screen text, no captions.",
+     "thumb": "ep1/06.webp"
+    },
+    {
+     "img": "7",
+     "sec": 3,
+     "tool": "flow",
+     "screen": "키보드를 급하게 두드리는 손",
+     "line": "타자 소리, 마지막에 엔터 \"탁\"",
+     "attach": "S1",
+     "imagePrompt": "첨부한 이미지와 같은 방, 같은 책상, 같은 푸른 모니터 불빛으로 그려줘. 세로 9:16.\n\n키보드를 위에서 비스듬히 내려다본 클로즈업. 회색 후드티 소매 밖으로 나온 캐릭터의 두 손이 키보드를 급하게 두드리고 있어. 손의 피부색과 3D 애니메이션 질감은 첨부 이미지의 캐릭터와 같아.\n키보드는 평범한 검은색 사무용 키보드이고, 옆에 마우스와 컵라면 용기가 살짝 보여. 얼굴은 나오지 않아.\n손과 키보드는 화면 가운데에 두고, 화면 맨 아래 20%는 책상 바닥만 보이게 해줘. 글자와 워터마크 없이.",
+     "flowPrompt": "Stylized 3D animated film. Close-up of two hands typing very fast on the black keyboard, frantic and a little clumsy, ending with one hard press of the Enter key.\nCamera: locked-off, no movement.\nAudio: loud rapid keyboard clacking, one heavy final key press. No voice, no music.\nNo subtitles, no on-screen text, no captions.",
+     "thumb": "ep1/07.webp"
+    },
+    {
+     "img": "8",
+     "sec": 3,
+     "tool": "edit",
+     "screen": "네이놈 지도 검색창에 글자가 한 자씩 찍힘",
+     "line": "타자 효과: 한국자연공사 나무읍 지사",
+     "attach": "",
+     "imagePrompt": "세로 9:16 이미지를 만들어줘. 어두운 방에서 컴퓨터 모니터 화면을 정면으로 가까이 찍은 사진이야. 인물은 없어.\n\n모니터에는 가상의 지도 사이트가 떠 있어. 실제 포털이나 지도 서비스의 로고, 색, 화면 구성을 따라 하지 말고 독창적인 디자인으로. 포인트 색은 주황색.\n화면 위쪽에 주황색 사이트 이름이 정확한 한글로 \"네이놈 지도\"라고 적혀 있어.\n그 아래에 크고 둥근 검색창이 있고, 검색창 안은 비어 있고 깜빡이는 커서와 오른쪽 끝의 돋보기 아이콘만 있어.\n검색창 아래는 연한 회색과 연두색의 단순한 지도 배경. 지명이나 도로 이름은 넣지 마.\n\"네이놈 지도\" 외의 글자는 넣지 마. 워터마크 없이.",
+     "flowPrompt": "",
+     "thumb": "ep1/08.webp"
+    },
+    {
+     "img": "9",
+     "sec": 6,
+     "tool": "edit",
+     "screen": "길찾기 결과. \"5시간 20분\"으로 확대 → \"버스 운행 하루 6대\"로 이동",
+     "line": "토토(목소리만): \"다섯 시간… 이십 분? 버스가… 하루 여섯 대?\"",
+     "attach": "",
+     "imagePrompt": "세로 9:16 이미지를 만들어줘. 휴대폰 길찾기 앱 화면처럼 보이는 가상의 지도 그래픽이야. 실제 지도 앱의 로고나 상표, 색 구성은 따라 하지 말고 포인트 색은 주황색으로.\n\n연한 회색과 연두색의 단순한 지도 위에 한반도 남쪽 윤곽이 보여. 도시 이름이나 도로 이름 같은 다른 지명은 넣지 마.\n맨 위쪽에 파란 출발 핀, 맨 아래쪽 바닷가 근처 산골에 빨간 도착 핀. 두 핀 사이를 파란 경로 선이 구불구불 길게 이어.\n화면에 들어갈 글자는 아래뿐이고, 정확한 한글로 적어줘.\n화면 맨 위 주황색 사이트 이름: 네이놈 지도\n출발 핀 옆: 서울\n도착 핀 옆: 나무읍\n화면 가운데 아래쪽의 흰 카드 안에 큰 글씨: 5시간 20분\n그 아래 작은 글씨: 환승 3회 · 버스 하루 6대\n카드는 화면 맨 아래 20%보다 위에 두고, 오른쪽 가장자리에는 붙이지 마. 워터마크 없이.",
+     "flowPrompt": "",
+     "thumb": "ep1/09.webp"
+    },
+    {
+     "img": "10-1",
+     "sec": 5,
+     "tool": "edit",
+     "screen": "장소 정보. 번듯한 유리 건물 사진으로 확대 → 로드뷰 버튼으로 이동",
+     "line": "토토(목소리만): \"어? 그래도 건물은 좋네! 신축인가 봐.\"",
+     "attach": "S11",
+     "imagePrompt": "첨부한 이미지와 같은 모니터, 같은 \"네이놈 지도\" 사이트 디자인과 색으로, 검색 결과 화면을 그려줘. 세로 9:16, 인물은 없어.\n\n검색창 안에 정확한 한글로 \"한국자연공사 나무읍지사\"라고 입력되어 있어.\n지도는 온통 연두색 논밭과 구불구불한 길 하나뿐이고, 한가운데에 빨간 위치 핀이 하나 꽂혀 있어.\n핀 아래에 작은 흰 정보 카드가 있고, 카드 안에 굵은 글씨로 \"나무읍지사\", 그 옆에 주황색 버튼이 있고 버튼 안에 \"로드뷰\"라고 적혀 있어.\n마우스 화살표 커서가 \"로드뷰\" 버튼 바로 위에 올라가 있어.\n정보 카드와 버튼은 화면 가운데에 두고, 화면 맨 아래 20%와 오른쪽 가장자리에는 두지 마.\n위에 적은 글자 외의 지명이나 문구는 넣지 마. 워터마크 없이.",
+     "flowPrompt": "",
+     "thumb": "ep1/10-1.webp"
+    },
+    {
+     "img": "10-1",
+     "sec": 1,
+     "tool": "edit",
+     "screen": "로드뷰 버튼 클릭, 흰 번쩍임",
+     "line": "효과음: 딸깍",
+     "attach": "",
+     "imagePrompt": "",
+     "flowPrompt": "",
+     "thumb": "ep1/10-1.webp"
+    },
+    {
+     "img": "",
+     "sec": 2,
+     "tool": "edit",
+     "screen": "암전 + 자막 \"로드뷰는 3편에서\"",
+     "line": "정적",
+     "attach": "",
+     "imagePrompt": "",
+     "flowPrompt": ""
+    }
+   ],
+   "done": {
+    "img": true
+   }
+  },
+  {
+   "label": "1-3",
+   "title": "로드뷰",
+   "ending": "억지 미소. 시청자는 가봐도 다르지 않다는 걸 이미 안다.",
+   "cuts": [
+    {
+     "img": "10-1",
+     "sec": 2,
+     "tool": "edit",
+     "screen": "지난 이야기: 로드뷰 버튼 클릭 → 화면이 하얗게 번쩍",
+     "line": "토토(목소리만): \"신축인가 봐.\" / 딸깍",
+     "attach": "",
+     "imagePrompt": "",
+     "flowPrompt": "",
+     "thumb": "ep1/10-1.webp"
+    },
+    {
+     "img": "11",
+     "sec": 7,
+     "tool": "flow",
+     "screen": "로드뷰. 젖은 도로 끝의 낡은 건물로 천천히 다가감",
+     "line": "(3초 정적) 까마귀 / 토토(목소리만): \"…사진이랑 다른데.\"",
+     "attach": "릴스용 단체사진",
+     "imagePrompt": "첨부한 이미지의 배경에 있는 건물과 같은 건물을, 사람과 이름표 없이 그려줘. 사실적인 사진 느낌, 세로 9:16.\n\n한국 시골의 낡은 2층 사무소 건물. 얼룩진 외벽, 파란 차양, 텅 빈 주차장에 낡은 승합차 한 대.\n건물 양옆과 앞쪽은 논밭이고 뒤에는 야산. 흐린 날이라 색이 가라앉았어. 전봇대와 늘어진 전선.\n도로 건너편에서 지도 앱 거리뷰로 본 것처럼 살짝 광각이고, 건물이 화면 가운데에 조금 작게 있어 주변의 논밭이 넓게 보여.\n건물 간판과 차량에는 글자를 넣지 마. 워터마크 없이.",
+     "flowPrompt": "Realistic footage, overcast day. Slow, eerie push-in along the wet road toward the old two-story office building. Rice plants sway in the wind, power lines swing slightly, a single crow flies across the gray sky. Nothing else moves. The building sign stays unchanged.\nCamera: slow steady forward dolly, like a street-view image coming to life.\nAudio: wind, distant crow caw, faint hum. No voice, no music.\nNo subtitles, no on-screen text, no captions.",
+     "thumb": "ep1/11.webp"
+    },
+    {
+     "img": "12",
+     "sec": 9,
+     "tool": "flow",
+     "screen": "스탠드 불빛 아래 억지로 웃는 토토. 심호흡",
+     "line": "토토: \"설마… 가보면 다르겠지. 처음부터 겁먹지 말자.\"",
+     "attach": "취업전 김토토 + S1",
+     "imagePrompt": "첫 번째 이미지의 캐릭터를 얼굴, 피부색, 검은 머리카락까지 똑같이 유지하고, 두 번째 이미지와 같은 방, 같은 회색 후드티로 그려줘. 머리에 새싹이나 식물은 없어.\n캐릭터는 같은 3D 애니메이션 그림체, 배경은 사실적인 원룸. 세로 9:16.\n\n모니터가 꺼져서 방이 더 어두워졌고, 책상 스탠드의 노란 불빛만 켜져 있어.\n캐릭터가 의자에 앉아 두 손을 무릎에 올리고, 억지로 입꼬리를 올려 웃고 있어. 눈은 불안하게 흔들려.\n정수리의 삐친 머리 한 가닥은 꺾인 채 반쯤만 일어서 있어.\n상반신 정면 구도, 얼굴은 화면 가운데보다 조금 위. 화면 맨 아래 20%에는 얼굴이나 손이 오지 않게 해줘. 글자와 워터마크 없이.",
+     "flowPrompt": "Stylized 3D animated film. The young man sits stiffly in his chair under the warm desk lamp. He takes a long deep breath, forces an awkward smile and nods to himself. He says in Korean, slowly, \"설마… 가보면 다르겠지. 처음부터 겁먹지 말자.\". The bent cowlick on his hair tries to stand up, then droops again.\nCamera: locked-off, very slow push-in.\nAudio: his quiet unsure voice, a soft slightly high young male voice, a soft hopeful piano note at the end.\nNo subtitles, no on-screen text, no captions.",
+     "thumb": "ep1/12.webp"
+    },
+    {
+     "img": "",
+     "sec": 5,
+     "tool": "edit",
+     "screen": "검은 화면 + 타이틀 「흙수저 김토토」 / 입사 D-14 / 다음 화: 연수원 2주",
+     "line": "잔잔한 피아노",
+     "attach": "",
+     "imagePrompt": "",
+     "flowPrompt": ""
+    },
+    {
+     "img": "",
+     "sec": 2,
+     "tool": "edit",
+     "screen": "자막 \"팔로우하면 2화 알림\"",
+     "line": "",
+     "attach": "",
+     "imagePrompt": "",
+     "flowPrompt": ""
+    }
+   ],
+   "done": {
+    "img": true
+   }
+  }
+ ],
+ "updatedAt": "2026-11-16T00:00:00.000Z"
+}

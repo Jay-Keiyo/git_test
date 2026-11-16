@@ -308,7 +308,8 @@ function renderEp(){
   const total = (ep.parts||[]).reduce((s,p)=>s+(p.cuts||[]).reduce((a,c)=>a+(+c.sec||0),0),0);
   box.append(el("div",{class:"row",style:"justify-content:space-between;align-items:flex-start"},
     el("div",{}, el("h2",{text:`${ep.no}화 「${ep.title}」`}), el("p",{class:"sub",text:`${(ep.parts||[]).length}편 · 합계 약 ${total}초`})),
-    delButton(ep)));
+    el("div",{class:"row"},
+      el("button",{class:"btn small ghost",text:"화 전체 그림 지시문 복사 (Codex용)",onclick:()=>copyCodex(ep,ep.parts||[])}), delButton(ep))));
   for (const [pi,p] of (ep.parts||[]).entries()){
     const secs = (p.cuts||[]).reduce((a,c)=>a+(+c.sec||0),0);
     const approve = el("div",{class:"approve",role:"group","aria-label":"진행 도장"}, STAMPS.map(([k,cap])=>
@@ -329,6 +330,17 @@ function renderEp(){
         promptBox("영상 프롬프트 (그림을 시작 프레임으로)", c.flowPrompt))));
     }
     if (p.ending) part.append(el("p",{class:"ending"}, el("b",{text:"끊는 지점 "}), p.ending));
+    // 편별 고치기
+    const pReq = el("textarea",{id:`fixReq-${pi}`,placeholder:`${p.label}편에서 고칠 점. 예: 통화 장면을 2초 줄이고 대사를 더 짧게.`});
+    const pSt = el("span",{class:"sub"});
+    const pGo = el("button",{class:"btn small",text:"고쳐 달라고 하기",disabled:!sample,
+      onclick:()=>generate({fix:ep, partIndex:pi, request:pReq.value, stateEl:pSt, btn:pGo})});
+    const pWrap = el("div",{hidden:true,style:"display:flex;flex-direction:column;gap:8px"}, pReq, el("div",{class:"row"}, pGo, pSt),
+      sample? null : el("p",{class:"notice",text:"이 화면에서는 Claude에게 물어볼 수 없어 고치기를 쓸 수 없습니다."}));
+    part.append(el("div",{class:"row"},
+      el("button",{class:"btn small ghost",text:`${p.label} 고치기`,onclick:()=>{ pWrap.hidden=!pWrap.hidden; pWrap.style.display=pWrap.hidden?"none":"flex"; if(!pWrap.hidden) pReq.focus(); }}),
+      el("button",{class:"btn small ghost",text:`${p.label} 그림 지시문 복사 (Codex용)`,onclick:()=>copyCodex(ep,[p])})), pWrap);
+    pWrap.style.display = "none";
     box.append(part);
   }
   // 고쳐 달라고 하기
@@ -338,6 +350,17 @@ function renderEp(){
   box.append(el("div",{class:"part"}, el("h3",{text:"고치기"}), req, el("div",{class:"row"}, go, st),
     sample? null : el("p",{class:"notice",text:"이 화면에서는 Claude에게 물어볼 수 없어 고치기를 쓸 수 없습니다."})));
   if (!sample) go.disabled = true;
+}
+function copyCodex(ep, parts){
+  const seen = new Set(), out = [];
+  for (const p of parts) for (const c of (p.cuts||[])){
+    if (!c.imagePrompt || !c.img || seen.has(c.img)) continue; seen.add(c.img);
+    out.push(`### 그림 ${c.img} → assets/ep${ep.no}/${c.img}.png`, `첨부: ${c.attach||"없음"}`, c.imagePrompt, "");
+  }
+  if (!out.length){ toast("새로 뽑을 그림이 없는 편입니다"); return; }
+  copyText([`「흙수저 김토토」 ${ep.no}화 ${parts.map(p=>p.label).join(", ")} 편의 그림을 만들어 줘.`,
+    "이 저장소의 `회사 릴스/AGENTS.md` 규칙을 따르고, 아래 순서대로 한 장씩 만들어 적힌 경로(`회사 릴스` 폴더 기준)에 저장해 줘.",
+    "이미 같은 이름의 파일이 있으면 덮어쓰지 말고 건너뛰어 줘.", "", ...out].join("\n"));
 }
 function delButton(ep){
   const b = el("button",{class:"btn small ghost",text:"이 화 삭제"});
@@ -408,7 +431,8 @@ const FORMAT = `[출력 형식] 설명 없이 아래 JSON 하나만 출력한다
 function parseEp(text){
   const a = text.indexOf("{"), b = text.lastIndexOf("}");
   if (a<0 || b<=a) throw new Error("no json");
-  const ep = JSON.parse(text.slice(a, b+1));
+  let ep = JSON.parse(text.slice(a, b+1));
+  if (!ep.parts && Array.isArray(ep.cuts)) ep = {parts:[ep]};
   if (!Array.isArray(ep.parts) || !ep.parts.length) throw new Error("no parts");
   for (const p of ep.parts){ p.label=String(p.label||""); p.title=String(p.title||""); p.cuts=(p.cuts||[]).map(c=>({
     img:String(c.img??""), sec:Math.max(1,Math.round(+c.sec||4)), tool:c.tool==="flow"?"flow":"edit", screen:String(c.screen||""), line:String(c.line||""),
@@ -416,13 +440,17 @@ function parseEp(text){
   return ep;
 }
 const ERR = {not_granted:"Claude 사용을 허용하지 않아 만들 수 없습니다.", rate_limited:"요청이 몰렸습니다. 잠시 뒤에 다시 눌러 주세요.", cancelled:"멈췄습니다."};
-async function generate({fix, request, stateEl, btn}){
+const PART_FORMAT = `[출력 형식] 설명 없이 고친 편 하나의 JSON만 출력한다. 코드 블록 표시도 넣지 않는다.
+{"label":"편 이름","title":"편 제목","ending":"끊는 지점 한 문장","cuts":[{"img":"그림 번호(바뀌지 않은 그림은 원래 번호 그대로, 새 그림은 화 전체에서 안 쓴 번호)","sec":5,"tool":"flow 또는 edit","screen":"…","line":"…","attach":"…","imagePrompt":"…","flowPrompt":"…"}]}`;
+async function generate({fix, partIndex, request, stateEl, btn}){
   if (!sample){ stateEl.textContent = "이 화면에서는 Claude에게 물어볼 수 없습니다."; return; }
   let ask;
   if (fix){
     if (!request || !request.trim()){ stateEl.textContent = "어떻게 고칠지 적어 주세요."; return; }
     const {done, ...rest} = fix; const slim = {...rest, parts: fix.parts.map(({done, ...p})=>({...p, cuts:p.cuts.map(({thumb, ...c})=>c)}))};
-    ask = `아래는 지금의 ${fix.no}화 대본이다.\n${JSON.stringify(slim)}\n\n[고칠 내용]\n${request.trim()}\n\n고칠 내용만 반영하고 나머지는 그대로 둔 전체 대본을 다시 출력한다.`;
+    ask = partIndex!=null
+      ? `아래는 지금의 ${fix.no}화 전체 대본이다 (참고용).\n${JSON.stringify(slim)}\n\n[고칠 편] ${fix.parts[partIndex].label}\n[고칠 내용]\n${request.trim()}\n\n이 편 하나만 고친다. 고칠 내용과 상관없는 컷은 글자 하나 바꾸지 않는다. 다른 편은 출력하지 않는다.`
+      : `아래는 지금의 ${fix.no}화 대본이다.\n${JSON.stringify(slim)}\n\n[고칠 내용]\n${request.trim()}\n\n고칠 내용만 반영하고 나머지는 그대로 둔 전체 대본을 다시 출력한다.`;
   } else {
     const idea = $("#nIdea").value.trim();
     if (!idea){ stateEl.textContent = "소재를 적어 주세요."; return; }
@@ -432,11 +460,21 @@ async function generate({fix, request, stateEl, btn}){
   ctl = new AbortController(); btn.disabled = true; $("#nStop").hidden = !!fix;
   stateEl.textContent = "Claude가 생각하는 중입니다. 1~2분 걸릴 수 있습니다.";
   try{
-    const {text, truncated} = await sample(`${bible()}\n\n${FORMAT}\n\n[이번 요청]\n${ask}`, {signal:ctl.signal, cache:false,
+    const {text, truncated} = await sample(`${bible()}\n\n${fix && partIndex!=null ? PART_FORMAT : FORMAT}\n\n[이번 요청]\n${ask}`, {signal:ctl.signal, cache:false,
       onText:({text})=>{ stateEl.textContent = `쓰는 중입니다 (${text.length.toLocaleString()}자)`; }});
     if (truncated) throw {code:"truncated"};
-    const ep = parseEp(text);
-    if (fix){ ep.id = fix.id; ep.parts.forEach((p,i)=>{ if (fix.parts[i]?.done) p.done = fix.parts[i].done; p.cuts.forEach((c,j)=>{ const old=fix.parts[i]?.cuts[j]; if (old?.thumb && old.img===c.img) c.thumb=old.thumb; }); }); }
+    let ep = parseEp(text);
+    if (fix){
+      const thumbs = {}; for (const p of fix.parts) for (const c of p.cuts) if (c.thumb) thumbs[c.img] = c.thumb;
+      if (partIndex!=null){
+        const np = ep.parts[0], old = fix.parts[partIndex];
+        np.label = old.label; if (old.done) np.done = old.done;
+        ep = {...fix, parts: fix.parts.map((p,i)=> i===partIndex ? np : p)};
+      } else {
+        ep.id = fix.id; ep.parts.forEach((p,i)=>{ if (fix.parts[i]?.done) p.done = fix.parts[i].done; });
+      }
+      for (const p of ep.parts) for (const c of p.cuts) if (!c.thumb && thumbs[c.img]) c.thumb = thumbs[c.img];
+    }
     else ep.id = `ep${String(ep.no).replace(/[^0-9a-z]/gi,"")}-${Date.now().toString(36)}`;
     ep.no = String(ep.no||$("#nNo").value); ep.title = String(ep.title||"제목 없음");
     await saveEp(ep);
