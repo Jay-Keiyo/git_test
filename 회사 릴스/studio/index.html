@@ -1,0 +1,514 @@
+<title>흙수저 김토토 제작실</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* 레이아웃: 위에 탭 세 개(에피소드 / 인물 / 미리보기), 아래 한 단. 결재란 도장이 진행 상태를 겸한다. */
+:root{
+  --bg:#EDF0EA; --surface:#FFFFFF; --sunk:#E2E6DD; --fg:#211B14; --muted:#655C50; --line:#CFD4C7;
+  --soil:#8A5A33; --sprout:#237A34; --sprout-soft:#DCEFD9; --stamp:#C2331F; --warn:#9A6400;
+  --display:"Do Hyeon","IBM Plex Sans KR",sans-serif;
+  --body:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --mono:"IBM Plex Mono","D2Coding",ui-monospace,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#14120E; --surface:#1E1B16; --sunk:#27231C; --fg:#ECE7DE; --muted:#A79D8F; --line:#3A352B;
+  --soil:#C99564; --sprout:#74CF82; --sprout-soft:#1F3323; --stamp:#F0705C; --warn:#E0A840; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#14120E; --surface:#1E1B16; --sunk:#27231C; --fg:#ECE7DE; --muted:#A79D8F; --line:#3A352B;
+  --soil:#C99564; --sprout:#74CF82; --sprout-soft:#1F3323; --stamp:#F0705C; --warn:#E0A840; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.6;
+  padding-block:20px 60px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:920px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+h1{font-family:var(--display);font-weight:400;font-size:30px;margin:0;line-height:1.15;text-wrap:balance}
+h2{font-family:var(--display);font-weight:400;font-size:22px;margin:0;text-wrap:balance}
+h3{font-size:15px;font-weight:600;margin:0}
+p{margin:0}
+.sub{color:var(--muted);font-size:13.5px}
+header.top{display:flex;gap:12px;align-items:flex-end;justify-content:space-between;flex-wrap:wrap}
+.sproutmark{color:var(--sprout)}
+nav.tabs{display:flex;gap:6px;flex-wrap:wrap;border-bottom:2px solid var(--fg);padding-bottom:0}
+nav.tabs button{font:inherit;font-family:var(--display);font-size:18px;background:none;border:2px solid transparent;border-bottom:none;
+  color:var(--muted);padding:6px 14px;cursor:pointer;border-radius:8px 8px 0 0;margin-bottom:-2px}
+nav.tabs button[aria-selected="true"]{color:var(--fg);border-color:var(--fg);background:var(--bg)}
+button,select,input,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--sprout);outline-offset:2px}
+.btn{background:var(--fg);color:var(--bg);border:none;border-radius:8px;padding:9px 16px;cursor:pointer;font-weight:600}
+.btn.ghost{background:none;color:var(--fg);border:1.5px solid var(--line)}
+.btn.small{padding:5px 11px;font-size:13px;font-weight:500}
+.btn.go{background:var(--sprout);color:var(--surface)}
+.btn:disabled{opacity:.45;cursor:default}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.grow{flex:1 1 220px;min-width:0}
+label.f{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--muted);min-width:0}
+input[type=text],input[type=number],select,textarea{background:var(--bg);border:1.5px solid var(--line);border-radius:8px;padding:8px 10px;width:100%;color:var(--fg)}
+textarea{min-height:84px;resize:vertical;line-height:1.5}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 12px;cursor:pointer;font-size:13.5px}
+.chip[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.notice{background:var(--sunk);border-radius:8px;padding:10px 12px;font-size:13.5px;color:var(--muted)}
+.notice.warn{color:var(--warn)}
+/* 에피소드 */
+.part{border-top:2px solid var(--fg);padding-top:14px;display:flex;flex-direction:column;gap:12px}
+.parthead{display:flex;gap:12px;justify-content:space-between;align-items:flex-start;flex-wrap:wrap}
+.partno{font-family:var(--display);font-size:24px;line-height:1}
+.approve{display:grid;grid-template-columns:repeat(4,58px);border:1.5px solid var(--fg)}
+.approve button{background:none;border:none;border-left:1.5px solid var(--fg);padding:0;cursor:pointer;display:flex;flex-direction:column;min-height:66px}
+.approve button:first-child{border-left:none}
+.approve .cap{font-size:11.5px;border-bottom:1.5px solid var(--fg);padding:2px 0;letter-spacing:.08em;color:var(--fg)}
+.approve .seal{flex:1;display:grid;place-items:center;font-family:var(--display);font-size:15px;color:transparent}
+.approve button[aria-pressed="true"] .seal{color:var(--stamp)}
+.approve button[aria-pressed="true"] .seal span{border:2px solid var(--stamp);border-radius:50%;width:38px;height:38px;display:grid;place-items:center;transform:rotate(-12deg)}
+.cut{display:grid;grid-template-columns:64px 1fr;gap:12px;padding:10px 0;border-top:1px solid var(--line);min-width:0}
+.cut:first-of-type{border-top:none}
+.thumb{width:64px;aspect-ratio:9/16;border-radius:6px;background:var(--sunk);object-fit:cover;display:grid;place-items:center;font-family:var(--mono);font-size:12px;color:var(--muted)}
+.cutbody{display:flex;flex-direction:column;gap:6px;min-width:0}
+.cutmeta{display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.badge{font-size:11.5px;padding:1px 8px;border-radius:999px;border:1.5px solid currentColor;letter-spacing:.04em}
+.badge.flow{color:var(--sprout)} .badge.edit{color:var(--soil)}
+.line{font-weight:500}
+details.pr{border:1px solid var(--line);border-radius:8px;background:var(--bg)}
+details.pr summary{cursor:pointer;padding:6px 10px;font-size:13px;display:flex;gap:8px;align-items:center;justify-content:space-between}
+details.pr pre{margin:0;padding:10px;border-top:1px solid var(--line);font-family:var(--mono);font-size:12.5px;white-space:pre-wrap;word-break:break-word;line-height:1.55}
+.ending{font-size:13.5px;color:var(--muted)}
+.ending b{color:var(--fg)}
+/* 인물 */
+.cast{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.person{background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column}
+.person img{width:100%;aspect-ratio:1/1;object-fit:cover;object-position:50% 12%;background:var(--sunk)}
+.person .in{padding:12px 14px 14px;display:flex;flex-direction:column;gap:8px;flex:1}
+.person .nm{font-family:var(--display);font-size:20px;line-height:1.1}
+.person .rk{color:var(--sprout);font-size:13px;font-weight:600}
+.person ul{margin:0;padding-left:18px;font-size:13.5px;color:var(--muted)}
+.rules{columns:2 300px;column-gap:28px;font-size:14px;margin:0;padding-left:18px}
+.rules li{break-inside:avoid;margin-bottom:6px}
+/* 미리보기 */
+.pv{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:18px;align-items:start}
+@media (max-width:640px){.pv{grid-template-columns:1fr}.cut{grid-template-columns:52px 1fr}.thumb{width:52px}}
+canvas#stage{width:100%;max-width:300px;aspect-ratio:9/16;background:#000;border-radius:10px;display:block}
+.pvcut{display:grid;grid-template-columns:40px 1fr;gap:8px;padding:8px 0;border-top:1px solid var(--line)}
+.pvcut img{width:40px;aspect-ratio:9/16;object-fit:cover;border-radius:4px}
+.pvcut .ctl{display:grid;grid-template-columns:70px 110px 1fr;gap:6px;min-width:0}
+@media (max-width:480px){.pvcut .ctl{grid-template-columns:1fr 1fr}.pvcut .ctl input[type=text]{grid-column:1/-1}}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--fg);color:var(--bg);
+  padding:8px 16px;border-radius:999px;font-size:13.5px;z-index:20}
+@media (prefers-reduced-motion:no-preference){.toast{animation:pop .18s ease-out}}
+@keyframes pop{from{opacity:0;transform:translate(-50%,6px)}to{opacity:1;transform:translate(-50%,0)}}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div>
+      <h1>흙수저 김토토 <span class="sproutmark">제작실</span></h1>
+      <p class="sub">한국자연공사 나무읍지사 · 대본, 그림 프롬프트, 영상 프롬프트를 한 곳에서</p>
+    </div>
+  </header>
+
+  <nav class="tabs" role="tablist">
+    <button role="tab" data-tab="ep" aria-selected="true">에피소드</button>
+    <button role="tab" data-tab="cast" aria-selected="false">인물·규칙</button>
+    <button role="tab" data-tab="pv" aria-selected="false">미리보기</button>
+  </nav>
+
+  <!-- 에피소드 -->
+  <section id="tab-ep" class="wrap">
+    <div class="panel">
+      <div class="row" style="justify-content:space-between">
+        <h2>저장된 화</h2>
+        <button class="btn small ghost" id="toggleNew">새 화 만들기</button>
+      </div>
+      <div id="epList" class="chips"></div>
+      <p id="epState" class="notice">저장된 화를 불러오는 중입니다.</p>
+    </div>
+
+    <div class="panel" id="newPanel" hidden>
+      <h2>새 화 만들기</h2>
+      <p class="sub">소재를 적으면 Claude가 30초 편으로 나눈 대본, 씬별 그림 프롬프트, 영상 프롬프트를 만듭니다. 만든 결과는 위 목록에 저장됩니다.</p>
+      <div class="row">
+        <label class="f" style="flex:0 0 90px">화 번호<input type="text" id="nNo" inputmode="numeric" value="2"></label>
+        <label class="f grow">라인업에서 고르기<select id="nPick"></select></label>
+        <label class="f" style="flex:0 0 120px">몇 편으로<select id="nParts"><option>1</option><option>2</option><option selected>3</option><option>4</option></select></label>
+      </div>
+      <label class="f">소재와 꼭 넣을 장면<textarea id="nIdea" placeholder="예: 연수원 2주. 교육 듣고 동기들과 친해지고 저녁마다 술. 수료식에서 사원증을 받는 순간 새싹이 돋는다."></textarea></label>
+      <div>
+        <p class="sub" style="margin-bottom:6px">나오는 인물</p>
+        <div class="chips" id="nCast"></div>
+      </div>
+      <div class="row">
+        <button class="btn go" id="nGo">대본과 프롬프트 만들기</button>
+        <button class="btn ghost" id="nStop" hidden>멈추기</button>
+        <span class="sub" id="nState"></span>
+      </div>
+    </div>
+
+    <div id="epView" class="panel" hidden></div>
+  </section>
+
+  <!-- 인물 -->
+  <section id="tab-cast" class="wrap" hidden>
+    <div class="cast" id="castGrid"></div>
+    <div class="panel">
+      <h2>지켜야 할 규칙</h2>
+      <ul class="rules" id="ruleList"></ul>
+    </div>
+  </section>
+
+  <!-- 미리보기 -->
+  <section id="tab-pv" class="wrap" hidden>
+    <div class="panel">
+      <h2>그림으로 흐름 미리 보기</h2>
+      <p class="sub">그림을 순서대로 고르면 확대·이동 효과와 자막을 얹어 재생합니다. 파일은 이 기기 안에서만 쓰이고 어디에도 올라가지 않습니다.</p>
+      <div class="row">
+        <label class="btn ghost" for="pvFiles" style="cursor:pointer">그림 고르기</label>
+        <input type="file" id="pvFiles" accept="image/*" multiple hidden>
+        <button class="btn go" id="pvPlay" disabled>재생</button>
+        <label class="row" style="gap:6px;font-size:13.5px"><input type="checkbox" id="pvSafe" checked> 인스타 버튼에 가리는 영역 표시</label>
+        <span class="sub" id="pvInfo"></span>
+      </div>
+      <div class="pv">
+        <canvas id="stage" width="540" height="960"></canvas>
+        <div id="pvCuts"><p class="notice">아직 고른 그림이 없습니다. 파일 이름 순서(1, 2, 3 … 10-1, 11)대로 놓입니다.</p></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+/* ───── 고정 자료: 인물과 세계관 ───── */
+const CAST = [
+  {id:"kim-toto", name:"김토토", rank:"사원 · 기술직(5급)", plant:"새싹 하나", file:"김토토 사원",
+   notes:["순하고 눈치 봄. \"설마 가보면 다르겠지\" 긍정 회로","감정에 따라 새싹이 서고, 떨리고, 처진다","입사 전(1~2화)은 새싹 없이 삐친 머리 한 가닥"],
+   desc:"김토토 사원: 20대 후반 남자, 밝은 갈색 흙빛 피부, 검은 짧은 머리, 정수리에 작은 새싹 하나. 큰 흰 와이셔츠, 남색 슬랙스, 남색 줄 사원증."},
+  {id:"lee-jeongwon", name:"이정원", rank:"대리 · 2년차 경력직", plant:"묘목 + 흰 꽃봉오리", file:"이정원 대리",
+   notes:["일잘러, 주변의 신뢰","토토가 힘들어 보이면 슬쩍 도와줌","바빠서 자주는 못 도와줌"],
+   desc:"이정원 대리: 20대 후반 여자, 붉은 갈색 흙빛 피부, 어깨 길이 갈색 웨이브 머리, 정수리에 흰 꽃봉오리가 달린 작은 묘목. 베이지 블라우스, 검정 슬랙스, 태블릿."},
+  {id:"park-toyang", name:"박토양", rank:"대리 · 4년차", plant:"묘목", file:"박토양 대리",
+   notes:["일 잘하고 토토에게 잘 알려줌","늘 바빠서 설명하다 전화 받으러 감"],
+   desc:"박토양 대리: 30대 초반 남자, 진한 흑갈색 흙빛 피부, 짧은 곱슬머리, 정수리에 잎이 튼튼한 묘목. 소매 걷은 하늘색 셔츠, 서류철과 휴대폰."},
+  {id:"choi-taesan", name:"최태산", rank:"과장", plant:"가시 돋은 어린 나무", file:"최태산 과장",
+   notes:["일은 잘하지만 부서 최고 꼰대","\"막내가 당연히 해야지\"","회식 건배사, 2차 장소로 꼽 줌","차장보다 나이가 많아 술 마시면 말실수"],
+   desc:"최태산 과장: 40대 후반 남자, 자갈 박힌 회갈색 흙빛 피부, 희끗한 짧은 머리, 정수리에 가시 돋은 어린 나무. 남색 현장 점퍼, 팔짱, 못마땅한 표정."},
+  {id:"lee-nancho", name:"이난초", rank:"차장", plant:"기운 나무 + 로봇 키링", file:"이난초 차장",
+   notes:["최고 명문대 출신, 사회성 부족, 모태솔로","혼자 묵묵히 일함, 권위 없음","마이너 애니·게임 덕후, 유머 감각 없음"],
+   desc:"이난초 차장: 40대 초반 남자, 연한 모래빛 피부, 덥수룩한 곱슬머리, 동그란 안경, 정수리에 한쪽으로 기운 나무와 작은 로봇 키링. 체크 셔츠, 낡은 백팩."},
+  {id:"jo-gunghwa", name:"조궁화", rank:"부장", plant:"무궁화 나무 (기분 나쁘면 낙엽)", file:"조궁화 부장 / 화난 조궁화",
+   notes:["극단적 기분파. 결재를 엉뚱한 걸로 꼬투리","퇴근 후 회식 강제, 계산은 엔빵","남의 부서 일은 다 받아오고 \"요즘 MZ들은\"","잘못되면 실무자 탓"],
+   desc:"조궁화 부장: 50대 중반 남자, 누런 황토빛 피부, 2대8 포마드 머리, 배 나온 체형, 정수리에 분홍 무궁화가 핀 큰 나무(기분이 나쁘면 붉은 낙엽). 회색 정장, 금색 넥타이."},
+];
+const RULES = [
+  "배경은 가상의 한국자연공사 나무읍지사. 실제 기관명, 실제 지명, 실제 서비스 로고는 쓰지 않는다 (포털은 \"네이놈\").",
+  "인물은 흙빛 피부의 3D 애니메이션 캐릭터, 평범한 머리카락, 정수리에 식물. 배경은 사실적인 한국 일상 공간.",
+  "직급은 위로 솟은 식물 크기로 구분한다: 사원 새싹 하나 → 대리 묘목 → 과장 어린 나무 → 차장 중간 나무 → 부장 큰 나무.",
+  "새 장면 그림은 반드시 확정된 인물 그림을 첨부해서 뽑는다. 같은 방 장면은 첫 장면 그림도 함께 첨부한다.",
+  "모든 그림은 세로 9:16. 얼굴과 글자는 화면 맨 아래 20%와 오른쪽 아래 구석을 피한다.",
+  "한글이 들어간 모니터·지도 화면은 영상 모델에 넣지 않는다. 그림 그대로 편집 앱에서 확대·이동만 준다.",
+  "영상 클립 하나에 동작 하나, 최대 8초. 대사는 짧게.",
+  "한 화는 30초 안팎의 편 여러 개로 나누고, 각 편은 궁금한 순간에서 끊는다. 다음 편은 앞 편의 마지막 2~3초를 되풀이하며 시작한다.",
+  "매 화 엔딩에 \"입사 D+00일\" 자막을 넣는다.",
+];
+const LINEUP = [
+  ["2","연수원 2주","교육 열심히 듣고 동기들과 친해지고 저녁마다 술. 2주가 순식간. 수료식에서 사원증을 목에 거는 순간 삐친 머리 자리에서 새싹 하나가 솟는다. 동기 단톡방에서 발령지를 물으니 서울, 대전… 토토만 나무읍."],
+  ["3","첫 출근","허름한 2층 지사 건물. 출근 버스 창밖은 논, 밭, 논. 버스는 하루 6대. 정류장에 혼자 서 있는 토토."],
+  ["4","아무것도 안 시켜요","첫 달은 일도 안 주고 밥도 선임이 가자는 데로. 동기들과 메신저하며 \"여기 나쁘지 않은데?\" 마지막에 부장이 \"이제 슬슬 일 좀 해봐야지?\""],
+  ["5","식사하십니까","막내의 점심 지옥. 대리 둘, 과장, 차장, 부장 순으로 \"식사하십니까\". 네이놈 지도로 식당을 찾아 \"여기 어떠십니까?\" 하면 꼭 한 명은 떨떠름. 부서비는 걷는데 부장은 안 냄."],
+  ["6","이거 발주해봐~","설명 없이 던져진 발주 업무. 서무 메일 폭탄과 민원 전화에 하루가 끝남. 밤에 옛 문서를 뒤지며 야근, 10시 넘어 퇴근."],
+  ["7","언제 돼?","옛 문서 보며 고민하는데 과장과 차장이 재촉. 사이사이 과장이 일을 떠넘김. 토토의 새싹이 시들기 시작."],
+  ["8","중고딕이냐 헤드라인이냐","발주(안) 방침 결재. 부장의 날카로운 질문에 버벅대고 반려 반복. 정작 지적은 내용이 아니라 글꼴과 서식."],
+  ["9","일상감사","본사 감사실. \"이걸 왜 발주해야 하죠?\", \"다른 법령은 아니던데요\". 2주 넘게 깨지고 방침부터 발주까지 두 달."],
+  ["10","회식","장소 선정에 누군가 불만, 건배사 강요, 잔 돌리기, 못 마시는 술, 1차 중에 2차 예약, 3차 노래방. 계산은 엔빵. 새벽 2시 귀가."],
+  ["11","민원","노후 상수도관 파열로 밭이 침수되어 보상 민원. 해결이 늦어지자 민원인이 썩은 농작물을 사무실 앞에 뿌림. 치우는 건 막내."],
+  ["12","부장님의 아이디어","부장 지시로 쓸모없는 물품 구매 검토, 예산부서가 거절, 부장은 협의는 안 해주고 토토만 갈굼. 다른 부서가 거절하자 부장은 \"아, 안 되는구나\"."],
+  ["13","주말","차가 없어 퇴근 후엔 잠뿐. 주말엔 원룸 천장만 봄. 일요일 저녁 창밖 논 위로 지는 해."],
+  ["14","내일이 안 왔으면","출근길마다 \"오늘 무슨 일 생겨서 회사 안 갔으면\". 부장에게 치이고 귀가, 다시 같은 생각. 그래도 알람에 일어나는 토토."],
+  ["15","소개팅","시골이라 만남도 없음. 어렵게 들어온 소개팅은 왕복 4시간에 막차 때문에 8시에 일어나야 함."],
+];
+const STAMPS = [["img","그림"],["video","영상"],["edit","편집"],["post","업로드"]];
+
+/* ───── 도구 ───── */
+const $ = (s, el=document) => el.querySelector(s);
+const el = (tag, attrs={}, ...kids) => {
+  const n = document.createElement(tag);
+  for (const [k,v] of Object.entries(attrs)) {
+    if (k === "class") n.className = v; else if (k === "text") n.textContent = v;
+    else if (k.startsWith("on")) n.addEventListener(k.slice(2), v); else if (v !== false && v != null) n.setAttribute(k, v);
+  }
+  for (const k of kids.flat()) if (k != null) n.append(k);
+  return n;
+};
+let toastTimer;
+function toast(msg){
+  document.querySelector(".toast")?.remove();
+  document.body.append(el("div",{class:"toast",role:"status",text:msg}));
+  clearTimeout(toastTimer); toastTimer = setTimeout(()=>document.querySelector(".toast")?.remove(), 1800);
+}
+function copyText(text, pre){
+  navigator.clipboard.writeText(text).then(()=>toast("복사했습니다"), ()=>{
+    if (pre){ const r=document.createRange(); r.selectNodeContents(pre); const s=getSelection(); s.removeAllRanges(); s.addRange(r); }
+    toast("글자를 선택해 두었습니다. 직접 복사해 주세요");
+  });
+}
+const store = {
+  get(k, d){ try{ const v = localStorage.getItem(k); return v==null? d : JSON.parse(v);}catch{ return d; } },
+  set(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch{} },
+};
+
+/* ───── 탭 ───── */
+function showTab(name){
+  for (const b of document.querySelectorAll("nav.tabs button")) b.setAttribute("aria-selected", b.dataset.tab===name);
+  for (const t of ["ep","cast","pv"]) $("#tab-"+t).hidden = t!==name;
+  store.set("tab", name);
+}
+for (const b of document.querySelectorAll("nav.tabs button")) b.addEventListener("click", ()=>showTab(b.dataset.tab));
+
+/* ───── 인물·규칙 ───── */
+for (const c of CAST){
+  $("#castGrid").append(el("article",{class:"person"},
+    el("img",{src:`img/${c.id}.webp`,alt:`${c.name} ${c.rank}`,loading:"lazy"}),
+    el("div",{class:"in"},
+      el("div",{}, el("div",{class:"nm",text:c.name}), el("div",{class:"rk",text:`${c.rank} · ${c.plant}`})),
+      el("ul",{}, c.notes.map(n=>el("li",{text:n}))),
+      el("p",{class:"sub",text:`첨부할 그림: ${c.file}`}),
+      el("div",{style:"margin-top:auto"}, el("button",{class:"btn small ghost",onclick:()=>copyText(c.desc),text:"인물 설명 복사"})))));
+}
+for (const r of RULES) $("#ruleList").append(el("li",{text:r}));
+
+/* ───── 에피소드 저장소 (db가 없으면 이 기기에만 저장) ───── */
+let db = null, sample = null, eps = [], currentId = store.get("ep", null), dbReady = false;
+const epSort = (a,b) => (parseFloat(a.no)||0)-(parseFloat(b.no)||0) || String(a.id).localeCompare(String(b.id));
+function setEps(list){ eps = list.sort(epSort); dbReady = true; renderList(); renderEp(); }
+async function saveEp(ep){
+  ep.updatedAt = new Date().toISOString();
+  if (db) await db.doc("episodes/"+ep.id).set(ep);
+  else { const all = store.get("eps", []).filter(e=>e.id!==ep.id); all.push(ep); store.set("eps", all); setEps(all); }
+}
+async function removeEp(id){
+  if (db) await db.doc("episodes/"+id).delete();
+  else setEps(store.get("eps", []).filter(e=>e.id!==id)), store.set("eps", eps);
+}
+function renderList(){
+  const box = $("#epList"); box.replaceChildren();
+  for (const e of eps) box.append(el("button",{class:"chip","aria-pressed":String(e.id===currentId),
+    onclick:()=>{ currentId=e.id; store.set("ep", e.id); renderList(); renderEp(); }, text:`${e.no}화 ${e.title}`}));
+  const st = $("#epState");
+  st.hidden = eps.length>0;
+  if (!eps.length) st.textContent = dbReady ? "아직 저장된 화가 없습니다. \"새 화 만들기\"를 눌러 첫 화를 만들어 보세요." : "저장된 화를 불러오는 중입니다.";
+}
+function promptBox(label, text){
+  if (!text) return null;
+  const pre = el("pre",{text});
+  return el("details",{class:"pr"},
+    el("summary",{}, el("span",{text:label}), el("button",{class:"btn small",onclick:(e)=>{e.preventDefault(); copyText(text, pre);},text:"복사"})), pre);
+}
+function renderEp(){
+  const box = $("#epView"); const ep = eps.find(e=>e.id===currentId) || eps[0];
+  if (!ep){ box.hidden = true; return; }
+  if (ep.id!==currentId){ currentId = ep.id; renderList(); }
+  box.hidden = false; box.replaceChildren();
+  const total = (ep.parts||[]).reduce((s,p)=>s+(p.cuts||[]).reduce((a,c)=>a+(+c.sec||0),0),0);
+  box.append(el("div",{class:"row",style:"justify-content:space-between;align-items:flex-start"},
+    el("div",{}, el("h2",{text:`${ep.no}화 「${ep.title}」`}), el("p",{class:"sub",text:`${(ep.parts||[]).length}편 · 합계 약 ${total}초`})),
+    delButton(ep)));
+  for (const [pi,p] of (ep.parts||[]).entries()){
+    const secs = (p.cuts||[]).reduce((a,c)=>a+(+c.sec||0),0);
+    const approve = el("div",{class:"approve",role:"group","aria-label":"진행 도장"}, STAMPS.map(([k,cap])=>
+      el("button",{"aria-pressed":String(!!(p.done&&p.done[k])),title:cap+" 완료 표시",onclick:()=>toggleStamp(ep,pi,k)},
+        el("span",{class:"cap",text:cap}), el("span",{class:"seal"}, el("span",{text:"완료"})))));
+    const part = el("div",{class:"part"},
+      el("div",{class:"parthead"},
+        el("div",{}, el("div",{class:"partno",text:`${p.label} 「${p.title}」`}), el("p",{class:"sub",text:`약 ${secs}초`})), approve));
+    for (const c of (p.cuts||[])){
+      const thumb = c.thumb ? el("img",{class:"thumb",src:c.thumb,alt:"",loading:"lazy"}) : el("div",{class:"thumb",text:c.img||"—"});
+      part.append(el("div",{class:"cut"}, thumb, el("div",{class:"cutbody"},
+        el("div",{class:"cutmeta"},
+          el("span",{text:c.img? `그림 ${c.img}` : "그림 없음"}), el("span",{text:`${c.sec}초`}),
+          c.tool==="flow"? el("span",{class:"badge flow",text:"영상 모델"}) : el("span",{class:"badge edit",text:"편집 앱"})),
+        el("div",{text:c.screen||""}),
+        c.line? el("div",{class:"line",text:c.line}) : null,
+        promptBox(`그림 프롬프트${c.attach? " · 첨부: "+c.attach : ""}`, c.imagePrompt),
+        promptBox("영상 프롬프트 (그림을 시작 프레임으로)", c.flowPrompt))));
+    }
+    if (p.ending) part.append(el("p",{class:"ending"}, el("b",{text:"끊는 지점 "}), p.ending));
+    box.append(part);
+  }
+  // 고쳐 달라고 하기
+  const req = el("textarea",{id:"fixReq",placeholder:"예: 1-2편을 5초 줄여 줘. 과장 대사를 더 얄밉게."});
+  const st = el("span",{class:"sub"});
+  const go = el("button",{class:"btn",text:"이 화 고쳐 달라고 하기",onclick:()=>generate({fix:ep, request:req.value, stateEl:st, btn:go})});
+  box.append(el("div",{class:"part"}, el("h3",{text:"고치기"}), req, el("div",{class:"row"}, go, st),
+    sample? null : el("p",{class:"notice",text:"이 화면에서는 Claude에게 물어볼 수 없어 고치기를 쓸 수 없습니다."})));
+  if (!sample) go.disabled = true;
+}
+function delButton(ep){
+  const b = el("button",{class:"btn small ghost",text:"이 화 삭제"});
+  let armed = false;
+  b.addEventListener("click", async ()=>{
+    if (!armed){ armed = true; b.textContent = "한 번 더 누르면 삭제"; setTimeout(()=>{armed=false; b.textContent="이 화 삭제";}, 3000); return; }
+    try{ await removeEp(ep.id); toast("삭제했습니다"); }catch{ toast("삭제하지 못했습니다"); }
+  });
+  return b;
+}
+let writing = false;
+async function toggleStamp(ep, pi, key){
+  if (writing) return; writing = true;
+  const p = ep.parts[pi]; p.done = {...(p.done||{}), [key]: !(p.done&&p.done[key])};
+  renderEp();
+  try{ await saveEp(ep); }catch{ toast("저장하지 못했습니다"); }
+  writing = false;
+}
+
+/* ───── 새 화 만들기 ───── */
+const pick = $("#nPick");
+pick.append(el("option",{value:"",text:"직접 적기"}));
+for (const [no,t] of LINEUP) pick.append(el("option",{value:no,text:`${no}화 ${t}`}));
+pick.addEventListener("change", ()=>{ const l = LINEUP.find(x=>x[0]===pick.value); if (l){ $("#nNo").value=l[0]; $("#nIdea").value=`${l[1]}. ${l[2]}`; } });
+for (const c of CAST) $("#nCast").append(el("button",{class:"chip","aria-pressed":String(c.id==="kim-toto"),"data-id":c.id,text:c.name,
+  onclick:(e)=>{ const b=e.currentTarget; b.setAttribute("aria-pressed", String(b.getAttribute("aria-pressed")!=="true")); }}));
+$("#toggleNew").addEventListener("click", ()=>{ const p=$("#newPanel"); p.hidden=!p.hidden; if(!p.hidden) p.scrollIntoView({behavior:"smooth",block:"nearest"}); });
+$("#nGo").addEventListener("click", ()=>generate({stateEl:$("#nState"), btn:$("#nGo")}));
+let ctl = null;
+$("#nStop").addEventListener("click", ()=>ctl?.abort());
+
+function bible(){
+  return `너는 인스타그램 릴스 직장인 드라마 「흙수저 김토토」의 작가 겸 연출이다.
+
+[세계관]
+- 배경: 가상의 공공기관 한국자연공사 나무읍지사 사업부. 나무읍은 가상의 시골 읍. 주인공 김토토는 기술직(5급) 신입사원.
+- 화면: 인물은 흙빛 피부의 3D 애니메이션 캐릭터, 평범한 머리카락, 정수리에 식물이 자란다. 배경은 사실적인 한국 일상 공간. 세로 9:16.
+- 직급은 식물 크기: 사원 새싹 하나, 대리 묘목, 과장 어린 나무, 차장 중간 나무, 부장 큰 나무.
+- 토토의 새싹은 감정에 따라 서고, 떨리고, 처진다. 부장의 무궁화 나무는 기분 좋으면 꽃, 나쁘면 붉은 낙엽.
+- 실제 기관명, 실제 지명, 실제 서비스 로고는 쓰지 않는다. 포털·지도는 "네이놈".
+
+[인물]
+${CAST.map(c=>`- ${c.desc} 성격: ${c.notes.join(" / ")}`).join("\n")}
+
+[구성 규칙]
+- 한 화를 30초 안팎의 편 여러 개로 나눈다. 편 이름은 "화번호-순번" (예: 2-1).
+- 각 편은 궁금한 순간에서 끊는다. 둘째 편부터는 앞 편의 마지막 장면을 2~3초 되풀이하며 시작한다 ("지난 이야기").
+- 한 컷은 3~8초, 동작 하나, 대사는 한두 마디. 공감되는 직장 현실을 건조한 유머로.
+- 마지막 편의 끝에는 타이틀 「흙수저 김토토」와 "입사 D+00일" 자막 컷을 둔다.
+- tool: 인물이나 풍경이 움직이는 컷은 "flow", 한글이 적힌 모니터·문서·지도 화면과 자막 카드는 "edit".
+
+[그림 프롬프트 규칙] (ChatGPT에 붙여 넣는 한국어 문장, imagePrompt)
+- 인물이 나오는 컷은 "첨부한 캐릭터를 얼굴, 피부색, 머리카락, 머리 위 식물까지 똑같이 유지해서 그려줘. 캐릭터는 같은 3D 애니메이션 그림체, 배경은 사실적인 한국의 일상 공간. 세로 9:16."으로 시작한다.
+- 장소, 조명, 옷, 자세, 표정, 식물 상태, 구도를 구체적으로 적는다.
+- "화면 맨 아래 20%와 오른쪽 아래 구석에는 얼굴이나 손이 오지 않게 해줘. 글자와 워터마크 없이."로 끝낸다.
+- 글자가 들어가는 화면은 넣을 글자를 줄 단위로 정확히 적고 "이 외의 글자는 넣지 마"를 붙인다.
+- attach에는 함께 첨부할 확정 그림 이름을 적는다 (예: "김토토 사원", "조궁화 부장", 같은 장소의 앞 컷이면 "앞 컷 그림").
+- 같은 그림을 다시 쓰는 컷(지난 이야기 등)은 imagePrompt를 빈 문자열로 둔다.
+
+[영상 프롬프트 규칙] (Google Flow에 붙여 넣는 영어 문장, flowPrompt. tool이 "flow"인 컷만)
+- 형식: "Stylized 3D animated film. <동작 한 가지>. He/She says in Korean, \\"<대사>\\".\\nCamera: <카메라>.\\nAudio: <소리와 목소리 설명>. No music.\\nNo subtitles, no on-screen text, no captions."
+- 김토토의 목소리는 항상 "a soft, slightly high young male voice"로 적는다.
+- tool이 "edit"인 컷은 flowPrompt를 빈 문자열로 둔다.`;
+}
+const FORMAT = `[출력 형식] 설명 없이 아래 JSON 하나만 출력한다. 코드 블록 표시도 넣지 않는다.
+{"no":"화 번호","title":"화 제목","parts":[{"label":"2-1","title":"편 제목","ending":"끊는 지점 한 문장","cuts":[{"img":"그림 번호(1부터 화 전체 연속, 같은 그림을 다시 쓰면 같은 번호)","sec":5,"tool":"flow 또는 edit","screen":"화면에 보이는 것 한 문장","line":"대사·자막·소리 (없으면 빈 문자열)","attach":"첨부할 그림 이름 (없으면 빈 문자열)","imagePrompt":"…","flowPrompt":"…"}]}]}`;
+
+function parseEp(text){
+  const a = text.indexOf("{"), b = text.lastIndexOf("}");
+  if (a<0 || b<=a) throw new Error("no json");
+  const ep = JSON.parse(text.slice(a, b+1));
+  if (!Array.isArray(ep.parts) || !ep.parts.length) throw new Error("no parts");
+  for (const p of ep.parts){ p.label=String(p.label||""); p.title=String(p.title||""); p.cuts=(p.cuts||[]).map(c=>({
+    img:String(c.img??""), sec:Math.max(1,Math.round(+c.sec||4)), tool:c.tool==="flow"?"flow":"edit", screen:String(c.screen||""), line:String(c.line||""),
+    attach:String(c.attach||""), imagePrompt:String(c.imagePrompt||""), flowPrompt:String(c.flowPrompt||"")})); }
+  return ep;
+}
+const ERR = {not_granted:"Claude 사용을 허용하지 않아 만들 수 없습니다.", rate_limited:"요청이 몰렸습니다. 잠시 뒤에 다시 눌러 주세요.", cancelled:"멈췄습니다."};
+async function generate({fix, request, stateEl, btn}){
+  if (!sample){ stateEl.textContent = "이 화면에서는 Claude에게 물어볼 수 없습니다."; return; }
+  let ask;
+  if (fix){
+    if (!request || !request.trim()){ stateEl.textContent = "어떻게 고칠지 적어 주세요."; return; }
+    const {done, ...rest} = fix; const slim = {...rest, parts: fix.parts.map(({done, ...p})=>({...p, cuts:p.cuts.map(({thumb, ...c})=>c)}))};
+    ask = `아래는 지금의 ${fix.no}화 대본이다.\n${JSON.stringify(slim)}\n\n[고칠 내용]\n${request.trim()}\n\n고칠 내용만 반영하고 나머지는 그대로 둔 전체 대본을 다시 출력한다.`;
+  } else {
+    const idea = $("#nIdea").value.trim();
+    if (!idea){ stateEl.textContent = "소재를 적어 주세요."; return; }
+    const cast = [...document.querySelectorAll("#nCast .chip[aria-pressed=true]")].map(b=>CAST.find(c=>c.id===b.dataset.id).name);
+    ask = `${$("#nNo").value.trim()||"?"}화를 만든다.\n소재: ${idea}\n나오는 인물: ${cast.join(", ")||"김토토"}\n편 수: ${$("#nParts").value}편 (편마다 약 30초)`;
+  }
+  ctl = new AbortController(); btn.disabled = true; $("#nStop").hidden = !!fix;
+  stateEl.textContent = "Claude가 생각하는 중입니다. 1~2분 걸릴 수 있습니다.";
+  try{
+    const {text, truncated} = await sample(`${bible()}\n\n${FORMAT}\n\n[이번 요청]\n${ask}`, {signal:ctl.signal, cache:false,
+      onText:({text})=>{ stateEl.textContent = `쓰는 중입니다 (${text.length.toLocaleString()}자)`; }});
+    if (truncated) throw {code:"truncated"};
+    const ep = parseEp(text);
+    if (fix){ ep.id = fix.id; ep.parts.forEach((p,i)=>{ if (fix.parts[i]?.done) p.done = fix.parts[i].done; p.cuts.forEach((c,j)=>{ const old=fix.parts[i]?.cuts[j]; if (old?.thumb && old.img===c.img) c.thumb=old.thumb; }); }); }
+    else ep.id = `ep${String(ep.no).replace(/[^0-9a-z]/gi,"")}-${Date.now().toString(36)}`;
+    ep.no = String(ep.no||$("#nNo").value); ep.title = String(ep.title||"제목 없음");
+    await saveEp(ep);
+    currentId = ep.id; store.set("ep", ep.id); renderList(); renderEp();
+    stateEl.textContent = fix ? "고쳤습니다." : "만들어서 저장했습니다.";
+    if (!fix){ $("#newPanel").hidden = true; $("#epView").scrollIntoView({behavior:"smooth",block:"start"}); }
+  }catch(e){
+    stateEl.textContent = ERR[e?.code] || (e?.code==="truncated" ? "답이 길어 중간에 끊겼습니다. 편 수를 줄여 다시 만들어 주세요." : "만들지 못했습니다. 한 번 더 눌러 보시고, 계속 안 되면 편 수를 줄여 주세요.");
+  }finally{ btn.disabled = false; $("#nStop").hidden = true; }
+}
+
+/* ───── 미리보기 ───── */
+const stage = $("#stage"), g = stage.getContext("2d"); let pvCuts = [], playing = null;
+const FX = {zoomin:"확대", zoomout:"축소", pan:"옆으로 이동", shake:"흔들림", still:"고정"};
+const nat = s => s.replace(/\.[^.]+$/,"").split(/(\d+)/).map(x=>/^\d+$/.test(x)? x.padStart(6,"0") : x).join("");
+$("#pvFiles").addEventListener("change", async (e)=>{
+  const files = [...e.target.files].sort((a,b)=>nat(a.name).localeCompare(nat(b.name)));
+  for (const c of pvCuts) URL.revokeObjectURL(c.url);
+  pvCuts = await Promise.all(files.map(f=>new Promise(res=>{ const url=URL.createObjectURL(f); const im=new Image();
+    im.onload=()=>res({name:f.name,url,im,sec:4,fx:"zoomin",sub:""}); im.onerror=()=>res(null); im.src=url; })));
+  pvCuts = pvCuts.filter(Boolean); renderPvCuts(); drawFrame(0);
+});
+function renderPvCuts(){
+  const box = $("#pvCuts"); box.replaceChildren();
+  if (!pvCuts.length){ box.append(el("p",{class:"notice",text:"아직 고른 그림이 없습니다."})); }
+  pvCuts.forEach((c,i)=>{
+    const sec = el("input",{type:"number",min:"1",max:"15",value:c.sec,id:`pvSec${i}`,"aria-label":`${c.name} 길이(초)`,oninput:e=>{c.sec=Math.max(1,+e.target.value||1); pvTotal();}});
+    const fx = el("select",{id:`pvFx${i}`,"aria-label":`${c.name} 효과`,onchange:e=>{c.fx=e.target.value;}}, Object.entries(FX).map(([k,v])=>el("option",{value:k,text:v,selected:k===c.fx})));
+    const sub = el("input",{type:"text",placeholder:"자막",value:c.sub,id:`pvSub${i}`,"aria-label":`${c.name} 자막`,oninput:e=>{c.sub=e.target.value;}});
+    box.append(el("div",{class:"pvcut"}, el("img",{src:c.url,alt:c.name}), el("div",{}, el("div",{class:"sub",text:c.name}), el("div",{class:"ctl"}, sec, fx, sub))));
+  });
+  $("#pvPlay").disabled = !pvCuts.length; pvTotal();
+}
+function pvTotal(){ $("#pvInfo").textContent = pvCuts.length? `${pvCuts.length}컷 · ${pvCuts.reduce((s,c)=>s+c.sec,0)}초` : ""; }
+const ease = t => t*t*(3-2*t);
+function drawFrame(t){
+  const W=stage.width, H=stage.height; g.fillStyle="#000"; g.fillRect(0,0,W,H);
+  let c=null, lt=t; for (const x of pvCuts){ if (lt < x.sec){ c=x; break; } lt -= x.sec; }
+  if (c){
+    const k = ease(Math.min(lt/c.sec,1)); let z=1, ox=0, oy=0;
+    if (c.fx==="zoomin") z = 1+0.12*k; else if (c.fx==="zoomout") z = 1.12-0.12*k;
+    else if (c.fx==="pan"){ z=1.12; ox=(k-0.5)*0.1; } else if (c.fx==="shake"){ z=1.06; ox=(Math.random()-0.5)*0.012; oy=(Math.random()-0.5)*0.012; }
+    const base = Math.max(W/c.im.width, H/c.im.height)*z, w=c.im.width*base, h=c.im.height*base;
+    g.drawImage(c.im, (W-w)/2 - ox*w, (H-h)/2 - oy*h, w, h);
+    if (c.sub){ g.font = "600 34px 'IBM Plex Sans KR', sans-serif"; g.textAlign="center"; g.lineJoin="round"; g.lineWidth=7; g.strokeStyle="#000"; g.fillStyle="#fff";
+      g.strokeText(c.sub, W/2, H*0.72); g.fillText(c.sub, W/2, H*0.72); }
+  }
+  if ($("#pvSafe").checked){ g.fillStyle="rgba(230,40,40,.35)"; g.fillRect(0,0,W,H*0.11); g.fillRect(0,H*0.80,W,H*0.20); g.fillRect(W*0.85,H*0.50,W*0.15,H*0.30); }
+}
+$("#pvSafe").addEventListener("change", ()=>{ if (!playing) drawFrame(0); });
+$("#pvPlay").addEventListener("click", ()=>{
+  if (playing){ cancelAnimationFrame(playing); playing=null; $("#pvPlay").textContent="재생"; drawFrame(0); return; }
+  const total = pvCuts.reduce((s,c)=>s+c.sec,0), t0 = performance.now(); $("#pvPlay").textContent="멈춤";
+  const tick = now => { const t=(now-t0)/1000; if (t>=total){ playing=null; $("#pvPlay").textContent="재생"; drawFrame(0); return; } drawFrame(t); playing=requestAnimationFrame(tick); };
+  playing = requestAnimationFrame(tick);
+});
+drawFrame(0);
+
+/* ───── 시작 ───── */
+function start(){
+  showTab(store.get("tab","ep"));
+  renderList();
+  const giveUp = setTimeout(()=>{ if (!dbReady) setEps(store.get("eps", [])); }, 10000);
+  const cl = window.claude;
+  if (!cl?.use){ clearTimeout(giveUp); setEps(store.get("eps", [])); $("#nGo").disabled = true; $("#nState").textContent = "이 화면에서는 Claude에게 물어볼 수 없습니다."; return; }
+  cl.use("sample").then(s=>{ sample = s; if (!s){ $("#nGo").disabled = true; $("#nState").textContent = "이 화면에서는 Claude에게 물어볼 수 없습니다."; } renderEp(); });
+  cl.use("db").then(d=>{
+    if (!d){ clearTimeout(giveUp); setEps(store.get("eps", [])); return; }
+    db = d;
+    d.collection("episodes").onSnapshot(snap=>{ clearTimeout(giveUp); if (writing) return; setEps(snap.docs.map(x=>({...x.data(), id:x.id}))); },
+      ()=>{ clearTimeout(giveUp); if (!dbReady) setEps(store.get("eps", [])); });
+  });
+}
+start();
+</script>
