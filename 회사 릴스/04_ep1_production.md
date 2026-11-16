@@ -23,8 +23,8 @@
 | 4 | 8 | S4 | `He paces in a small circle while on the phone, nodding fast, wiping a tear, laughing. Gentle handheld camera following him.` | "네, 공기업이요. 네, 정년 보장이요." |
 | 5 | 6 | S5 | `Slow vertical scroll down the web page, stopping on the table.` | — |
 | 6 | 8 | S5 | `Very slow dramatic zoom into the bottom row of the table until the last cell fills the screen. Everything else blurs. Low ominous hum.` | (정적) |
-| 7 | 8 | S6 | `Extreme close-up. His smile stays frozen while his eyes slowly widen. The cowlick on top of his hair bends and flops sideways. He blinks twice. Silence, then a tiny comedic crack sound.` | "…거제?" |
-| 8 | 10 | 화면 녹화 | (실제 지도 앱 녹화: 경로가 남쪽으로 끝없이 이어지고 "5시간 20분" 표시) | "…도?" |
+| 7 | 8 | S6 | `Extreme close-up. His smile stays frozen while his eyes slowly widen. The cowlick on top of his hair bends and flops sideways. He blinks twice. Silence, then a tiny comedic crack sound.` | "…나무읍?" |
+| 8 | 10 | S9 | `The route line draws itself slowly from the top pin down to the bottom pin. The camera drifts down following the line, then settles on the travel-time card. Subtle map zoom-out. Comedic falling whistle sound.` | "…읍?" |
 | 9 | 8 | S7 | `Slow creeping push-in toward the shabby building, like a street-view image coming alive. Grass sways, a crow flies across, an old air conditioner rattles. Overcast, lonely.` | 효과음: 까마귀 |
 | 10 | 12 | S8 | `The monitor is off. He takes a long deep breath, forces a smile and nods to himself. The bent cowlick tries to stand up and droops again. Soft hopeful piano starts.` | "설마… 가보면 다르겠지. 처음부터 겁먹지 말자." |
 | 11 | 8 | 편집 | 검은 화면 + 타이틀 「흙수저 김토토」 / 입사 D-14 / 다음 화: 연수원 2주 | — |
