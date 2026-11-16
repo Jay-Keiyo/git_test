@@ -86,7 +86,8 @@ def mosaic(img, box, block=26):
 GRAY = (150, 150, 150)
 
 if part == "2":
-    img5, img6, img7, img8, img9, img10, img10b = (load(n) for n in ("5", "6", "7", "8", "9", "10", "10-1"))
+    # 장소 정보 화면은 건물 사진에 "한국자연공사"만 적힌 10-1을 쓴다 (10은 사용하지 않음)
+    img5, img6, img7, img8, img9, img10, img10b = (load(n) for n in ("5", "6", "7", "8", "9", "10-1", "10-1"))
     img5_hidden = mosaic(img5, (0.44, 0.584, 0.905, 0.637))
     QUERY = "한국자연공사 나무읍 지사"
 
