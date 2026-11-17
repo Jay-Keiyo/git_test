@@ -52,6 +52,10 @@
    "src": "회사 릴스/06_ep1_script_flow.md",
    "sha256": "dda2cfbecb4e463ec21cf02db9305b9a3c5ca49ed79d877eb1704e069e687d7b"
   },
+  "자료/07_ep1_voice.md": {
+   "src": "회사 릴스/07_ep1_voice.md",
+   "sha256": "3514d1ac1ada93a67119e29f23484dfec018720d0a551db5ff51d728c2f5e103"
+  },
   "자료/assets/characters/choi-taesan.webp": {
    "src": "회사 릴스/assets/characters/choi-taesan.webp",
    "sha256": "9412cf780dda26904a03a1aae4e79ab98a7e4fca5f4db448bdd5fc0f7f23d3ae"
