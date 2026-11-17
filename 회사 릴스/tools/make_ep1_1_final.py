@@ -14,7 +14,7 @@ from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont
 
-W, H, FPS, RATE = 1080, 1920, 30, 44100
+W, H, FPS, RATE = 1080, 1920, 24, 44100  # Flow 클립과 같은 초당 24장
 FONT = "/usr/share/fonts/truetype/nanum/NanumSquareRoundB.ttf"
 clips, pics, out = Path(sys.argv[1]), Path(sys.argv[2]), Path(sys.argv[3])
 work = out.parent / "_work"
@@ -128,39 +128,60 @@ def end_card(t):
     return fr
 
 
-enc = subprocess.Popen(["ffmpeg", "-y", "-loglevel", "error", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}", "-r", str(FPS),
-                        "-i", "-", "-c:v", "libx264", "-preset", "medium", "-crf", "19", "-pix_fmt", "yuv420p",
-                        str(work / "video.mp4")], stdin=subprocess.PIPE)
-audio = []
-for name, subs in (("c1.mp4", subs_c1), ("c2.mp4", None), ("c3.mp4", subs_c3), ("c4.mp4", subs_c4)):
+def encode(path, frames, audio):
+    """프레임과 소리로 구간 하나를 만든다."""
+    wav = path.with_suffix(".wav")
+    with wave.open(str(wav), "w") as w:
+        w.setnchannels(1); w.setsampwidth(2); w.setframerate(RATE)
+        w.writeframes(b"".join(struct.pack("<h", int(max(-1, min(1, v)) * 32767)) for v in audio))
+    enc = subprocess.Popen(["ffmpeg", "-y", "-loglevel", "error", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}",
+                            "-r", str(FPS), "-i", "-", "-i", str(wav), "-c:v", "libx264", "-preset", "medium", "-crf", "17",
+                            "-pix_fmt", "yuv420p", "-c:a", "pcm_s16le", "-shortest", str(path)], stdin=subprocess.PIPE)
     n = 0
-    for n, fr in enumerate(clip_frames(clips / name), 1):
-        if subs:
-            subs(fr, (n - 1) / FPS)
-        enc.stdin.write(fr.tobytes())
-    a = clip_audio(clips / name)
-    want = round(n / FPS * RATE)
-    audio += (a + [0.0] * want)[:want]
-for i in range(6 * FPS):
-    enc.stdin.write(table(i / FPS).tobytes())
-for i in range(3 * FPS):
-    enc.stdin.write(end_card(i / FPS).tobytes())
-enc.stdin.close()
-enc.wait()
+    for fr in frames:
+        enc.stdin.write(fr.tobytes()); n += 1
+    enc.stdin.close(); enc.wait()
+    return n / FPS
 
-# 표 컷: 낮게 깔리는 불길한 음, 끝 카드 직전 뚝 끊김
+
+segments = []  # (파일, 길이)
+for idx, (name, subs) in enumerate((("c1.mp4", subs_c1), ("c2.mp4", None), ("c3.mp4", subs_c3), ("c4.mp4", subs_c4))):
+    def frames(name=name, subs=subs):
+        for n, fr in enumerate(clip_frames(clips / name)):
+            if subs:
+                subs(fr, n / FPS)
+            yield fr
+    seg = work / f"seg{idx}.mov"
+    segments.append((seg, encode(seg, frames(), clip_audio(clips / name))))
+
 random.seed(3)
-start = len(audio)
-audio += [0.0] * (9 * RATE)
-for i in range(int(5.6 * RATE)):
-    t = i / RATE
-    audio[start + i] += 0.35 * (t / 5.6) * math.sin(2 * math.pi * (55 - 2 * t) * t)
-with wave.open(str(work / "audio.wav"), "w") as w:
-    w.setnchannels(1)
-    w.setsampwidth(2)
-    w.setframerate(RATE)
-    w.writeframes(b"".join(struct.pack("<h", int(max(-1, min(1, v)) * 32767)) for v in audio))
+drone = [0.35 * (i / RATE / 5.6) * math.sin(2 * math.pi * (55 - 2 * i / RATE) * i / RATE) if i < 5.6 * RATE else 0.0
+         for i in range(6 * RATE)]
+seg = work / "seg4.mov"
+segments.append((seg, encode(seg, (table(i / FPS) for i in range(6 * FPS)), drone)))
+seg = work / "seg5.mov"
+segments.append((seg, encode(seg, (end_card(i / FPS) for i in range(3 * FPS)), [0.0] * (3 * RATE))))
 
-subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(work / "video.mp4"), "-i", str(work / "audio.wav"),
-                "-c:v", "copy", "-c:a", "aac", "-b:a", "160k", "-shortest", "-movflags", "+faststart", str(out)], check=True)
+# 컷 사이 장면 전환 (그림 1→2→3→4는 짧은 디졸브, 표 컷 앞은 흰 번쩍임 대신 디졸브, 끝 카드는 페이드)
+XF = [0.25, 0.25, 0.25, 0.35, 0.3]
+inputs, vf, af = [], [], []
+for f, _ in segments:
+    inputs += ["-i", str(f)]
+prev_v, prev_a, offset = "0:v", "0:a", segments[0][1]
+for k in range(1, len(segments)):
+    d = XF[k - 1]
+    offset -= d
+    vf.append(f"[{prev_v}][{k}:v]xfade=transition=fade:duration={d}:offset={offset:.3f}[v{k}]")
+    af.append(f"[{prev_a}][{k}:a]acrossfade=d={d}:c1=tri:c2=tri[a{k}]")
+    prev_v, prev_a = f"v{k}", f"a{k}"
+    offset += segments[k][1]
+last = len(segments) - 1
+# 소리 다듬기: 저음 웅웅거림 제거, 목소리 크기 고르게, 인스타 기준 음량(-14 LUFS)
+af.append(f"[a{last}]highpass=f=70,acompressor=threshold=-20dB:ratio=3:attack=5:release=120:makeup=2,loudnorm=I=-14:TP=-1.5:LRA=9[aout]")
+subprocess.run(["ffmpeg", "-y", "-loglevel", "error", *inputs, "-filter_complex", ";".join(vf + af),
+                "-map", f"[v{last}]", "-map", "[aout]", "-r", str(FPS), "-c:v", "libx264", "-preset", "slow", "-crf", "18",
+                "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-movflags", "+faststart", str(out)], check=True)
+for f, _ in segments:
+    f.unlink(missing_ok=True); f.with_suffix(".wav").unlink(missing_ok=True)
+work.rmdir()
 print("완성:", out)
