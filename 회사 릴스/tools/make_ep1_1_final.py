@@ -84,16 +84,44 @@ def clip_audio(path):
     return [s / 32768 for s in struct.unpack(f"<{len(raw) // 2}h", raw)]
 
 
-# 대사 파일 속 각 줄의 위치(초)와 컷 안에서 시작할 시각(초)
-LINES = {  # 줄: (파일에서 시작, 끝)
-    1: (0.15, 3.25), 2: (3.50, 5.18), 3: (5.22, 7.38), 4: (7.40, 9.52), 5: (10.02, 11.32), 6: (11.34, 12.90)}
-PLACE = {"c1.mp4": [(1, 0.6)], "c3.mp4": [(2, 0.45)], "c4.mp4": [(3, 0.35), (4, 3.4)], "table": [(5, 0.6), (6, 2.9)]}
+# 단어 조각: (컷, 대사 파일에서 시작, 끝, 컷 안에서 시작할 시각, 빠르기, 자막)
+# 컷 안 시각은 Flow 원본 클립에서 토토가 실제로 입을 움직이는 시점에 맞췄다.
+PIECES = [
+    ("c1.mp4", 0.25, 0.90, 2.25, 1.0, "제발…"),
+    ("c1.mp4", 1.30, 2.00, 3.10, 1.0, "제발… 제발…"),
+    ("c3.mp4", 2.55, 3.25, 1.00, 1.0, "됐다!!!"),
+    ("c3.mp4", 3.60, 5.20, 2.75, 1.4, "붙었다!!!"),
+    ("c4.mp4", 5.25, 6.02, 0.15, 1.0, "엄마!"),
+    ("c4.mp4", 6.05, 7.40, 1.15, 1.0, "엄마! 나 붙었어!"),
+    ("c4.mp4", 7.55, 8.08, 2.55, 1.0, "응,"),
+    ("c4.mp4", 8.15, 8.72, 3.90, 1.0, "응, 공기업!"),
+    ("c4.mp4", 8.80, 9.58, 5.15, 0.8, "정년 보장!"),
+    ("table", 10.05, 11.30, 0.60, 1.0, "어디 보자…"),
+    ("table", 11.40, 12.92, 2.90, 1.0, "근무지가…"),
+]
 voice = clip_audio(voice_file) if voice_file else None
 
 
+def stretch(samples, tempo):
+    """조각의 빠르기를 바꾼다 (음 높이는 그대로)."""
+    if tempo == 1.0:
+        return samples
+    raw = struct.pack(f"<{len(samples)}h", *[int(max(-1, min(1, v)) * 32767) for v in samples])
+    out_raw = subprocess.run(["ffmpeg", "-loglevel", "error", "-f", "s16le", "-ar", str(RATE), "-ac", "1", "-i", "-",
+                              "-af", f"atempo={tempo}", "-f", "s16le", "-"], input=raw, capture_output=True).stdout
+    return [v / 32768 for v in struct.unpack(f"<{len(out_raw) // 2}h", out_raw)]
+
+
+placed = []  # (컷, 시작, 끝, 자막)
+if voice:
+    for key, a, b, at, tempo, text in PIECES:
+        piece = stretch(voice[int(a * RATE):int(b * RATE)], tempo)
+        placed.append((key, at, at + len(piece) / RATE, text, piece))
+
+
 def with_voice(key, base):
-    """voice가 있으면 그 컷의 원래 목소리를 빼고 대사 줄을 얹는다."""
-    if voice is None or key not in PLACE:
+    """voice가 있으면 그 컷의 원래 목소리를 빼고 단어 조각을 얹는다."""
+    if voice is None or not any(p[0] == key for p in placed):
         return base
     if key != "table":  # 원래 클립 소리(Flow 목소리)를 빼고 아주 작은 방 소음만 깐다
         rnd, lp, mixed = random.Random(7), 0.0, []
@@ -102,55 +130,54 @@ def with_voice(key, base):
             mixed.append(lp * 0.05)
     else:
         mixed = list(base)
-    for line, at in PLACE[key]:
-        a, b = LINES[line]
-        piece = voice[int(a * RATE):int(b * RATE)]
-        fade = int(0.03 * RATE)
+    fade = int(0.02 * RATE)
+    for k, at, _, _, piece in placed:
+        if k != key:
+            continue
         for i, v in enumerate(piece):
-            g = min(1, i / fade, (len(piece) - i) / fade)
+            g = min(1, (i + 1) / fade, (len(piece) - i) / fade)
             j = int(at * RATE) + i
             if j < len(mixed):
                 mixed[j] += v * g
     return mixed
 
 
-def say(line, key):
-    """대사 줄이 그 컷 안에서 나오는 구간 (자막 시간)."""
-    if voice is None:
-        return None
-    for ln, at in PLACE.get(key, []):
-        if ln == line:
-            a, b = LINES[line]
-            return at, at + (b - a) + 0.15
-    return None
-
-
-def show(t, line, key, default):
-    rng = say(line, key) or default
-    return rng[0] <= t < rng[1]
+def voiced_sub(fr, key, t, size=76, y=0.70):
+    """그 시각에 나오는 조각의 자막 (다음 조각이 나올 때까지 유지)."""
+    mine = [p for p in placed if p[0] == key]
+    cur = None
+    for k, at, end, text, _ in mine:
+        if at - 0.05 <= t:
+            cur = (text, end)
+    if cur and t < cur[1] + 0.6:
+        subtitle(fr, cur[0], y=y, size=size)
+        return True
+    return False
 
 
 # 컷 목록: (클립 경로 또는 None, 길이(초), 자막 함수)
 def subs_c1(fr, t):
     if t < 2.0:
         tag(fr, "수험 생활 3년")
-    if show(t, 1, "c1.mp4", (2.2, 3.95)):
+    if not voiced_sub(fr, "c1.mp4", t) and not voice and 2.2 < t < 3.95:
         subtitle(fr, "제발… 제발…")
 
 
 def subs_c3(fr, t):
-    a, b = say(2, "c3.mp4") or (0.6, 3.6)
-    mid = a + (b - a) * 0.45
-    if a < t < mid:
+    if voice:
+        voiced_sub(fr, "c3.mp4", t, size=96)
+    elif 0.6 < t < 2.0:
         subtitle(fr, "됐다!!!", size=96)
-    elif mid <= t < b:
+    elif 2.0 <= t < 3.6:
         subtitle(fr, "붙었다!!!", size=96)
 
 
 def subs_c4(fr, t):
-    if show(t, 3, "c4.mp4", (0, 2.3)):
+    if voice:
+        voiced_sub(fr, "c4.mp4", t)
+    elif t < 2.3:
         subtitle(fr, "엄마! 나 붙었어!")
-    elif show(t, 4, "c4.mp4", (2.4, 6.9)):
+    elif 2.4 < t < 6.9:
         subtitle(fr, "응, 공기업! 정년 보장!")
 
 
@@ -160,9 +187,11 @@ img5 = mosaic(Image.open(pics / "5.png").convert("RGB"), (0.44, 0.584, 0.905, 0.
 def table(t, d=6.0):  # 표를 훑어 내려가 모자이크 된 근무지 줄로 확대
     k = ease(t / 4.2)
     fr = view(img5, 0.5 - 0.10 * k, 0.36 + 0.25 * k, 1.0 + 0.8 * k)
-    if show(t, 5, "table", (0.6, 2.6)):
+    if voice:
+        voiced_sub(fr, "table", t, y=0.75)
+    elif 0.6 < t < 2.6:
         subtitle(fr, "어디 보자…", y=0.75)
-    elif show(t, 6, "table", (3.0, 5.6)):
+    elif 3.0 < t < 5.6:
         subtitle(fr, "근무지가…", y=0.75)
     return Image.blend(fr, Image.new("RGB", (W, H), "black"), min(max((t - 5.6) / 0.4, 0), 1))
 
