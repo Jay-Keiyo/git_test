@@ -2,10 +2,12 @@
 
 확정 그림은 `assets/ep1/` 의 12장 (01~09, 10-1, 11, 12). 1화를 1-1, 1-2, 1-3 세 편으로 나눠 올린다.
 
-- **Flow로 만드는 컷**: 그림 1, 3, 4, 6, 7, 11, 12 (인물과 풍경이 움직이는 컷)
-- **편집 앱으로 만드는 컷**: 그림 2, 5, 8, 9, 10-1 (모니터·지도 화면. 영상 모델에 넣으면 한글이 뭉개지므로 그림 그대로 넣고 확대·이동만 준다)
+- **Flow로 만드는 컷**: 그림 1, 2(소리용), 3, 4, 6, 7, 11, 12 (인물과 풍경이 움직이는 컷)
+- **편집 앱으로 만드는 컷**: 그림 5, 8, 9, 10-1 (모니터·지도 화면. 영상 모델에 넣으면 한글이 뭉개지므로 그림 그대로 넣고 확대·이동만 준다)
 
 ## Flow 공통 설정
+
+> **실사처럼 나오면**: 그림이 시작 프레임으로 들어가지 않고 글만으로 만들어진 것이다. 모드가 "프레임을 동영상으로"인지, 그 컷의 그림이 첫 프레임 칸에 올라가 있는지 먼저 확인한다. 텍스트만 넣는 모드에서는 인물이 매번 다른 사람으로 나온다.
 
 1. 새 프로젝트 설정에서 화면 비율을 **세로(9:16)** 로 고른다 (프롬프트에 쓰지 않는다)
 2. 모드를 **프레임을 동영상으로** 바꾸고, 그 컷의 그림을 **시작 프레임**으로 올린다
@@ -19,7 +21,7 @@
 | 순서 | 그림 | 초 | 화면 | 대사·자막·소리 | 만드는 곳 |
 |---|---|---|---|---|---|
 | 1 | 1 | 5 | 어두운 방, 화면을 노려보다 마우스를 누름 | 자막: 수험 생활 3년 / 토토: "제발… 제발…" / 클릭음 | Flow |
-| 2 | 2 | 4 | 합격 화면, 천천히 확대 | 효과음: 띠링 | 편집 앱 |
+| 2 | 2 | 4 | 합격 화면. 글자는 그대로, 아주 느린 확대와 빛 번짐만 | 효과음: 합격 알림음 + 반짝임 | Flow (소리용) |
 | 3 | 3 | 5 | 벌떡 일어나 두 주먹 치켜들고 환호 | 토토: "됐다!!! 붙었다!!!" | Flow |
 | 4 | 4 | 7 | 울면서 웃으며 통화 | 토토: "엄마! 나 붙었어! 응, 공기업! 정년 보장!" | Flow |
 | 5 | 5 | 6 | 안내 표를 위에서 아래로 훑다가 "근무 예정지" 칸 제목으로 확대. **오른쪽 칸의 값은 화면 밖** | 토토(목소리만): "어디 보자… 근무지가…" / 낮게 깔리는 음 | 편집 앱 |
@@ -30,16 +32,30 @@
 **컷 1 (그림 1) — Flow 프롬프트**
 
 ```
-Stylized 3D animated film. The young man stares at the laptop screen, tense. He swallows hard, his finger trembles on the mouse. He whispers in Korean, "제발… 제발…", then clicks the mouse once. The single cowlick on top of his hair quivers.
+Animate the provided start frame exactly as it is. Keep the same stylized 3D cartoon art style as an animated feature film, with the same big round cartoon eyes, simple shapes and soft colors. Keep the exact same character design, face, hair, clothes, props and room from the image. Not photorealistic, not live action, no realistic human skin, no new characters.
+The young man stares at the laptop screen, tense. He swallows hard, his finger trembles on the mouse. He whispers in Korean, "제발… 제발…", then clicks the mouse once. The single cowlick on top of his hair quivers.
 Camera: very slow push-in on his face. Lighting stays the same: dark room, blue screen glow.
 Audio: quiet room tone, one mouse click. A soft, slightly high young male voice. No music.
 No subtitles, no on-screen text, no captions.
 ```
 
+**컷 2 (그림 2) — Flow 프롬프트 (소리용: 화면은 거의 그대로, 효과음을 Flow에서 만든다)**
+
+```
+Animate the provided start frame exactly as it is. Keep the image's look, colors, layout and every detail unchanged.
+Static close-up of a computer monitor in a dark room, showing a job offer web page. Keep every letter, color and the layout of the screen exactly as in the image; do not redraw, move, blur or add any text. Only a very slow, subtle push-in toward the center of the screen, and the monitor light gently brightens and blooms for a moment.
+Camera: very slow push-in, no shake.
+Audio: a bright, cheerful success notification chime of three rising tones, like a game level-clear jingle, followed by a soft magical sparkle shimmer, then quiet room tone. No voice, no music.
+No subtitles, no captions, no new on-screen text.
+```
+
+화면 글자가 뭉개져 나오면 영상은 버리고 소리만 쓴다. 편집 앱에서 그림 2 정지 화면 아래에 이 클립의 소리만 깔면 된다.
+
 **컷 3 (그림 3) — Flow 프롬프트**
 
 ```
-Stylized 3D animated film. The young man pumps both fists in the air and jumps up and down with joy, eyes squeezed shut, laughing. He shouts in Korean, "됐다! 붙었다!". The cowlick on top of his hair stands straight up.
+Animate the provided start frame exactly as it is. Keep the same stylized 3D cartoon art style as an animated feature film, with the same big round cartoon eyes, simple shapes and soft colors. Keep the exact same character design, face, hair, clothes, props and room from the image. Not photorealistic, not live action, no realistic human skin, no new characters.
+The young man pumps both fists in the air and jumps up and down with joy, eyes squeezed shut, laughing. He shouts in Korean, "됐다! 붙었다!". The cowlick on top of his hair stands straight up.
 Camera: slight handheld shake, energetic. Same dark room with blue screen glow.
 Audio: his excited shout, a soft slightly high young male voice, chair wheels rolling. No music.
 No subtitles, no on-screen text, no captions.
@@ -48,7 +64,8 @@ No subtitles, no on-screen text, no captions.
 **컷 4 (그림 4) — Flow 프롬프트**
 
 ```
-Stylized 3D animated film. The young man holds the phone to his ear, crying happy tears and laughing, wiping his eye with the back of his hand. He says in Korean, "엄마! 나 붙었어! 응, 공기업! 정년 보장!". He nods quickly while talking.
+Animate the provided start frame exactly as it is. Keep the same stylized 3D cartoon art style as an animated feature film, with the same big round cartoon eyes, simple shapes and soft colors. Keep the exact same character design, face, hair, clothes, props and room from the image. Not photorealistic, not live action, no realistic human skin, no new characters.
+The young man holds the phone to his ear, crying happy tears and laughing, wiping his eye with the back of his hand. He says in Korean, "엄마! 나 붙었어! 응, 공기업! 정년 보장!". He nods quickly while talking.
 Camera: gentle handheld, slow drift to the right. Same dark room.
 Audio: his tearful happy voice, a soft slightly high young male voice. No music.
 No subtitles, no on-screen text, no captions.
@@ -76,7 +93,8 @@ No subtitles, no on-screen text, no captions.
 **컷 6 (그림 6) — Flow 프롬프트**
 
 ```
-Stylized 3D animated film. The young man's wide smile stays frozen on his face while his eyes slowly grow wider. A drop of sweat runs down his temple. The cowlick on top of his hair slowly bends and flops to the side. After a pause he says quietly in Korean, "…나무읍?", then, "거기가… 어디야?". He blinks twice.
+Animate the provided start frame exactly as it is. Keep the same stylized 3D cartoon art style as an animated feature film, with the same big round cartoon eyes, simple shapes and soft colors. Keep the exact same character design, face, hair, clothes, props and room from the image. Not photorealistic, not live action, no realistic human skin, no new characters.
+The young man's wide smile stays frozen on his face while his eyes slowly grow wider. A drop of sweat runs down his temple. The cowlick on top of his hair slowly bends and flops to the side. After a pause he says quietly in Korean, "…나무읍?", then, "거기가… 어디야?". He blinks twice.
 Camera: locked-off close-up, no movement. Blue screen glow on his face.
 Audio: dead silence, then his small confused voice, a soft slightly high young male voice. No music.
 No subtitles, no on-screen text, no captions.
@@ -85,7 +103,8 @@ No subtitles, no on-screen text, no captions.
 **컷 7 (그림 7) — Flow 프롬프트**
 
 ```
-Stylized 3D animated film. Close-up of two hands typing very fast on the black keyboard, frantic and a little clumsy, ending with one hard press of the Enter key.
+Animate the provided start frame exactly as it is. Keep the same stylized 3D cartoon art style as an animated feature film, with the same big round cartoon eyes, simple shapes and soft colors. Keep the exact same character design, face, hair, clothes, props and room from the image. Not photorealistic, not live action, no realistic human skin, no new characters.
+Close-up of two hands typing very fast on the black keyboard, frantic and a little clumsy, ending with one hard press of the Enter key.
 Camera: locked-off, no movement.
 Audio: loud rapid keyboard clacking, one heavy final key press. No voice, no music.
 No subtitles, no on-screen text, no captions.
@@ -108,6 +127,7 @@ No subtitles, no on-screen text, no captions.
 **컷 11 (그림 11) — Flow 프롬프트**
 
 ```
+Animate the provided start frame exactly as it is. Keep the image's look, colors, layout and every detail unchanged.
 Realistic footage, overcast day. Slow, eerie push-in along the wet road toward the old two-story office building. Rice plants sway in the wind, power lines swing slightly, a single crow flies across the gray sky. Nothing else moves. The building sign stays unchanged.
 Camera: slow steady forward dolly, like a street-view image coming to life.
 Audio: wind, distant crow caw, faint hum. No voice, no music.
@@ -117,7 +137,8 @@ No subtitles, no on-screen text, no captions.
 **컷 12 (그림 12) — Flow 프롬프트**
 
 ```
-Stylized 3D animated film. The young man sits stiffly in his chair under the warm desk lamp. He takes a long deep breath, forces an awkward smile and nods to himself. He says in Korean, slowly, "설마… 가보면 다르겠지. 처음부터 겁먹지 말자.". The bent cowlick on his hair tries to stand up, then droops again.
+Animate the provided start frame exactly as it is. Keep the same stylized 3D cartoon art style as an animated feature film, with the same big round cartoon eyes, simple shapes and soft colors. Keep the exact same character design, face, hair, clothes, props and room from the image. Not photorealistic, not live action, no realistic human skin, no new characters.
+The young man sits stiffly in his chair under the warm desk lamp. He takes a long deep breath, forces an awkward smile and nods to himself. He says in Korean, slowly, "설마… 가보면 다르겠지. 처음부터 겁먹지 말자.". The bent cowlick on his hair tries to stand up, then droops again.
 Camera: locked-off, very slow push-in.
 Audio: his quiet unsure voice, a soft slightly high young male voice, a soft hopeful piano note at the end.
 No subtitles, no on-screen text, no captions.

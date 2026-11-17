@@ -1,0 +1,5 @@
+{
+  "command": ["codex", "exec", "--skip-git-repo-check", "--full-auto"],
+  "prompt_via": "stdin",
+  "timeout_seconds": 900
+}

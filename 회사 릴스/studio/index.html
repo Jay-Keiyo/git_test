@@ -125,17 +125,10 @@ canvas#stage{width:100%;max-width:300px;aspect-ratio:9/16;background:#000;border
 
     <div class="panel" id="setPanel" hidden>
       <div class="row" style="justify-content:space-between">
-        <h2>GPT 연결</h2>
-        <span class="sub" id="keyState"></span>
+        <h2>Codex 연결</h2>
+        <span class="sub" id="keyState">확인 중</span>
       </div>
-      <p class="sub">키는 이 PC의 브라우저에만 저장되고, 요청은 OpenAI로 바로 갑니다. 그림 한 장, 대본 한 번마다 OpenAI 요금이 나갑니다.</p>
-      <div class="row">
-        <label class="f grow">OpenAI API 키<input type="password" id="sKey" autocomplete="off" placeholder="sk-..."></label>
-        <label class="f" style="flex:0 1 160px">대본 모델<input type="text" id="sText" value="gpt-4.1"></label>
-        <label class="f" style="flex:0 1 160px">그림 모델<input type="text" id="sImg" value="gpt-image-1"></label>
-        <label class="f" style="flex:0 1 120px">그림 품질<select id="sQ"><option value="low">낮음 (싸고 빠름)</option><option value="medium" selected>보통</option><option value="high">높음</option></select></label>
-      </div>
-      <div class="row"><button class="btn small" id="sSave">저장</button><button class="btn small ghost" id="sClear">키 지우기</button></div>
+      <p class="sub" id="codexNote">이 PC의 Codex가 대본을 쓰고 그림을 만듭니다. 만든 그림은 자료/만든그림 폴더에 저장됩니다. 한 번에 하나씩 처리하고, 그림 한 장에 1~3분 걸립니다.</p>
     </div>
 
     <div class="panel" id="newPanel" hidden>
@@ -244,7 +237,7 @@ const STAMPS = [["img","그림"],["video","영상"],["edit","편집"],["post","�
 /* ───── 실행 위치: claude.ai(Claude) 또는 PC(GPT) ───── */
 const LOCAL = !window.claude?.use;
 const asset = p => LOCAL ? "자료/assets/" + p : p;
-const NO_AI = LOCAL ? "설정에 OpenAI API 키를 넣으면 쓸 수 있습니다." : "이 화면에서는 Claude에게 물어볼 수 없어 고치기를 쓸 수 없습니다.";
+const NO_AI = LOCAL ? "시작.bat(맥은 시작.command)으로 열어야 Codex를 쓸 수 있습니다." : "이 화면에서는 Claude에게 물어볼 수 없어 고치기를 쓸 수 없습니다.";
 
 /* ───── 도구 ───── */
 const $ = (s, el=document) => el.querySelector(s);
@@ -434,6 +427,7 @@ ${CAST.map(c=>`- ${c.desc} 성격: ${c.notes.join(" / ")}`).join("\n")}
 - 한 컷은 3~8초, 동작 하나, 대사는 한두 마디. 공감되는 직장 현실을 건조한 유머로.
 - 마지막 편의 끝에는 타이틀 「흙수저 김토토」와 "입사 D+00일" 자막 컷을 둔다.
 - tool: 인물이나 풍경이 움직이는 컷은 "flow", 한글이 적힌 모니터·문서·지도 화면과 자막 카드는 "edit".
+- 한글 화면 컷이라도 효과음이 중요하면 tool을 "flow"로 두고, 화면은 글자를 그대로 둔 채 아주 느린 확대나 빛 번짐만 주고 효과음을 자세히 적은 소리용 flowPrompt를 쓴다. line에는 "효과음: …"을 적는다.
 
 [그림 프롬프트 규칙] (ChatGPT에 붙여 넣는 한국어 문장, imagePrompt)
 - 인물이 나오는 컷은 "첨부한 캐릭터를 얼굴, 피부색, 머리카락, 머리 위 식물까지 똑같이 유지해서 그려줘. 캐릭터는 같은 3D 애니메이션 그림체, 배경은 사실적인 한국의 일상 공간. 세로 9:16."으로 시작한다.
@@ -444,7 +438,8 @@ ${CAST.map(c=>`- ${c.desc} 성격: ${c.notes.join(" / ")}`).join("\n")}
 - 같은 그림을 다시 쓰는 컷(지난 이야기 등)은 imagePrompt를 빈 문자열로 둔다.
 
 [영상 프롬프트 규칙] (Google Flow에 붙여 넣는 영어 문장, flowPrompt. tool이 "flow"인 컷만)
-- 형식: "Stylized 3D animated film. <동작 한 가지>. He/She says in Korean, \\"<대사>\\".\\nCamera: <카메라>.\\nAudio: <소리와 목소리 설명>. No music.\\nNo subtitles, no on-screen text, no captions."
+- 인물이 나오는 컷은 반드시 이 문장으로 시작한다: "Animate the provided start frame exactly as it is. Keep the same stylized 3D cartoon art style as an animated feature film, with the same big round cartoon eyes, simple shapes and soft colors. Keep the exact same character design, face, hair, clothes, props and room from the image. Not photorealistic, not live action, no realistic human skin, no new characters."
+- 그다음 형식: "<동작 한 가지>. He/She says in Korean, \\"<대사>\\".\\nCamera: <카메라>.\\nAudio: <소리와 목소리 설명>. No music.\\nNo subtitles, no on-screen text, no captions."
 - 김토토의 목소리는 항상 "a soft, slightly high young male voice"로 적는다.
 - tool이 "edit"인 컷은 flowPrompt를 빈 문자열로 둔다.`;
 }
@@ -462,7 +457,7 @@ function parseEp(text){
     attach:String(c.attach||""), imagePrompt:String(c.imagePrompt||""), flowPrompt:String(c.flowPrompt||"")})); }
   return ep;
 }
-const ERR = {no_key:"설정에 OpenAI API 키를 먼저 넣어 주세요.", api:"", not_granted:"Claude 사용을 허용하지 않아 만들 수 없습니다.", rate_limited:"요청이 몰렸습니다. 잠시 뒤에 다시 눌러 주세요.", cancelled:"멈췄습니다."};
+const ERR = {no_codex:"시작.bat(맥은 시작.command)으로 열어야 Codex를 쓸 수 있습니다.", api:"", not_granted:"Claude 사용을 허용하지 않아 만들 수 없습니다.", rate_limited:"요청이 몰렸습니다. 잠시 뒤에 다시 눌러 주세요.", cancelled:"멈췄습니다."};
 const PART_FORMAT = `[출력 형식] 설명 없이 고친 편 하나의 JSON만 출력한다. 코드 블록 표시도 넣지 않는다.
 {"label":"편 이름","title":"편 제목","ending":"끊는 지점 한 문장","cuts":[{"img":"그림 번호(바뀌지 않은 그림은 원래 번호 그대로, 새 그림은 화 전체에서 안 쓴 번호)","sec":5,"tool":"flow 또는 edit","screen":"…","line":"…","attach":"…","imagePrompt":"…","flowPrompt":"…"}]}`;
 async function generate({fix, partIndex, request, stateEl, btn}){
@@ -481,7 +476,7 @@ async function generate({fix, partIndex, request, stateEl, btn}){
     ask = `${$("#nNo").value.trim()||"?"}화를 만든다.\n소재: ${idea}\n나오는 인물: ${cast.join(", ")||"김토토"}\n편 수: ${$("#nParts").value}편 (편마다 약 30초)`;
   }
   ctl = new AbortController(); btn.disabled = true; $("#nStop").hidden = !!fix;
-  stateEl.textContent = (LOCAL? "GPT가" : "Claude가") + " 쓰는 중입니다. 1~2분 걸릴 수 있습니다.";
+  stateEl.textContent = (LOCAL? "Codex가" : "Claude가") + " 쓰는 중입니다. 1~3분 걸릴 수 있습니다.";
   try{
     const {text, truncated} = await sample(`${bible()}\n\n${fix && partIndex!=null ? PART_FORMAT : FORMAT}\n\n[이번 요청]\n${ask}`, {signal:ctl.signal, cache:false,
       onText:({text})=>{ stateEl.textContent = `쓰는 중입니다 (${text.length.toLocaleString()}자)`; }});
@@ -500,7 +495,7 @@ async function generate({fix, partIndex, request, stateEl, btn}){
     }
     else ep.id = `ep${String(ep.no).replace(/[^0-9a-z]/gi,"")}-${Date.now().toString(36)}`;
     ep.no = String(ep.no||$("#nNo").value); ep.title = String(ep.title||"제목 없음");
-    await saveEp(ep);
+    await saveEp(ep); await loadGenerated(ep);
     currentId = ep.id; store.set("ep", ep.id); renderList(); renderEp();
     stateEl.textContent = fix ? "고쳤습니다." : "만들어서 저장했습니다.";
     if (!fix){ $("#newPanel").hidden = true; $("#epView").scrollIntoView({behavior:"smooth",block:"start"}); }
@@ -556,90 +551,54 @@ $("#pvPlay").addEventListener("click", ()=>{
 });
 drawFrame(0);
 
-/* ───── GPT 연결 (PC 모드) ───── */
-const cfg = () => store.get("cfg", {key:"", text:"gpt-4.1", img:"gpt-image-1", q:"medium"});
-function loadCfg(){ const c = cfg(); $("#sKey").value=c.key||""; $("#sText").value=c.text||"gpt-4.1"; $("#sImg").value=c.img||"gpt-image-1"; $("#sQ").value=c.q||"medium";
-  $("#keyState").textContent = c.key ? "키 저장됨" : "키 없음"; }
-async function apiError(r){ let m = `OpenAI 오류 ${r.status}`; try{ const j = await r.json(); if (j?.error?.message) m += `: ${j.error.message}`; }catch{} return {code:"api", message:m}; }
-async function gptText(input, {signal, onText}={}){
-  const c = cfg(); if (!c.key) throw {code:"no_key"};
-  onText?.({text:""});
+/* ───── Codex 연결 (PC 모드: 시작.bat 으로 연 로컬 서버) ───── */
+const CODEX = LOCAL && location.protocol.startsWith("http");
+async function post(path, body, signal){
   let r;
-  try{ r = await fetch("https://api.openai.com/v1/chat/completions",{method:"POST",signal,
-    headers:{"Content-Type":"application/json","Authorization":"Bearer "+c.key},
-    body:JSON.stringify({model:c.text||"gpt-4.1", messages:[{role:"user", content: typeof input==="string"? input : input.map(t=>t.content).join("\n\n")}]})}); }
-  catch(e){ throw e?.name==="AbortError" ? {code:"cancelled"} : {code:"api", message:"OpenAI에 연결하지 못했습니다. 인터넷 연결을 확인해 주세요."}; }
-  if (!r.ok) throw await apiError(r);
-  const j = await r.json(); const ch = j.choices?.[0];
-  return {text: ch?.message?.content || "", truncated: ch?.finish_reason==="length"};
+  try{ r = await fetch(path,{method:"POST",signal,headers:{"Content-Type":"application/json"},body:JSON.stringify(body)}); }
+  catch(e){ throw e?.name==="AbortError" ? {code:"cancelled"} : {code:"api", message:"제작실 서버에 연결하지 못했습니다. 시작.bat(맥은 시작.command) 창이 켜져 있는지 확인해 주세요."}; }
+  let j = {}; try{ j = await r.json(); }catch{}
+  if (!r.ok) throw {code:"api", message: j.error || `오류 ${r.status}`};
+  return j;
 }
-// 첨부 이름 → 참조 그림 (자료/refs.js 가 window.TOTO_REFS 로 채운다)
+async function codexText(input, {signal, onText}={}){
+  if (!CODEX) throw {code:"no_codex"};
+  onText?.({text:""});
+  const j = await post("/api/text", {prompt: typeof input==="string"? input : input.map(t=>t.content).join("\n\n")}, signal);
+  return {text: j.text || "", truncated:false};
+}
 const REF_NAMES = [["취업전 김토토","kim-toto_before"],["입사 전 김토토","kim-toto_before"],["김토토 표정","kim-toto_expressions"],["김토토","kim-toto"],
   ["이정원","lee-jeongwon"],["박토양","park-toyang"],["최태산","choi-taesan"],["이난초","lee-nancho"],["화난 조궁화","jo-gunghwa_angry"],["조궁화","jo-gunghwa"],
   ["단체사진","group_reels"],["사원증","idcards"]];
-async function dataUrlBlob(u){ const [h,b] = u.split(","); const bin = atob(b); const a = new Uint8Array(bin.length); for (let i=0;i<bin.length;i++) a[i]=bin.charCodeAt(i); return new Blob([a],{type:h.slice(5).split(";")[0]}); }
-async function refsFor(ep, c){
-  const refs = [], used = new Set(), text = c.attach || "";
-  let rest = text;
-  for (const [name,id] of REF_NAMES){ if (rest.includes(name)){ rest = rest.split(name).join(" "); if (!used.has(id) && window.TOTO_REFS?.[id]){ used.add(id); refs.push(await dataUrlBlob(window.TOTO_REFS[id])); } } }
-  // 같은 화에서 이미 만든 그림 (앞 컷 그림, 그림 3 …)
-  const order = ep.parts.flatMap(p=>p.cuts).map(x=>x.img).filter(Boolean);
-  const wants = [];
-  if (/앞 컷/.test(text)){ const i = order.indexOf(c.img); for (let k=i-1;k>=0;k--) if (order[k]!==c.img && genBlobs[`${ep.id}/${order[k]}`]){ wants.push(order[k]); break; } }
+function refsFor(ep, c){
+  const refs = [], text = c.attach || ""; let rest = text;
+  for (const [name,id] of REF_NAMES){ if (rest.includes(name)){ rest = rest.split(name).join(" "); const r = `assets/characters/${id}.webp`; if (!refs.includes(r)) refs.push(r); } }
+  const order = ep.parts.flatMap(p=>p.cuts).map(x=>x.img).filter(Boolean), wants = [];
+  if (/앞 컷/.test(text)){ const i = order.indexOf(c.img); for (let k=i-1;k>=0;k--) if (order[k]!==c.img && genUrls[`${ep.id}/${order[k]}`]){ wants.push(order[k]); break; } }
   for (const m of text.matchAll(/그림\s*([0-9]+(?:-[0-9]+)?)/g)) wants.push(m[1]);
-  for (const w of wants){ const b = genBlobs[`${ep.id}/${w}`]; if (b && !used.has("g"+w)){ used.add("g"+w); refs.push(b); } }
-  return refs.slice(0, 10);
+  for (const w of wants) if (genUrls[`${ep.id}/${w}`]) refs.push(`만든그림/${ep.id}/${w}.png`);
+  return [...new Set(refs)];
 }
-async function cropTo916(blob){
-  const url = URL.createObjectURL(blob); const im = new Image(); await new Promise((ok,no)=>{ im.onload=ok; im.onerror=no; im.src=url; });
-  const w = Math.round(im.height*9/16), cv = document.createElement("canvas"); cv.width = Math.min(w, im.width); cv.height = im.height;
-  cv.getContext("2d").drawImage(im, (im.width-cv.width)/2, 0, cv.width, cv.height, 0, 0, cv.width, cv.height); URL.revokeObjectURL(url);
-  return await new Promise(r=>cv.toBlob(r,"image/png"));
+const genUrls = {};
+async function loadGenerated(ep){
+  if (!CODEX || !ep) return;
+  try{ const j = await (await fetch(`/api/images?ep=${encodeURIComponent(ep.id)}`)).json();
+    for (const n of j.images||[]) if (!/_old_/.test(n)) genUrls[`${ep.id}/${n}`] = `자료/만든그림/${ep.id}/${n}.png`; }catch{}
 }
-async function gptImage(prompt, refs){
-  const c = cfg(); if (!c.key) throw {code:"no_key"};
-  const full = prompt + "\n\n세로 구도로 그리고, 좌우 가장자리는 잘려도 되도록 중요한 것은 가운데에 둬.";
-  let r;
-  try{
-    if (refs.length){
-      const fd = new FormData(); fd.append("model", c.img||"gpt-image-1"); fd.append("prompt", full); fd.append("size","1024x1536"); fd.append("quality", c.q||"medium");
-      refs.forEach((b,i)=>fd.append("image[]", b, `ref${i}.${(b.type.split("/")[1]||"png")}`));
-      r = await fetch("https://api.openai.com/v1/images/edits",{method:"POST",headers:{"Authorization":"Bearer "+c.key},body:fd});
-    } else {
-      r = await fetch("https://api.openai.com/v1/images/generations",{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+c.key},
-        body:JSON.stringify({model:c.img||"gpt-image-1", prompt:full, size:"1024x1536", quality:c.q||"medium"})});
-    }
-  }catch{ throw {code:"api", message:"OpenAI에 연결하지 못했습니다. 인터넷 연결을 확인해 주세요."}; }
-  if (!r.ok) throw await apiError(r);
-  const j = await r.json(); const d = j.data?.[0];
-  let blob;
-  if (d?.b64_json) blob = await dataUrlBlob("data:image/png;base64,"+d.b64_json);
-  else if (d?.url){ blob = await (await fetch(d.url)).blob(); }
-  else throw {code:"api", message:"그림을 받지 못했습니다."};
-  return await cropTo916(blob);
-}
-// 만든 그림 보관 (이 PC 브라우저의 IndexedDB)
-const genBlobs = {}, genUrls = {};
-const idb = new Promise(res=>{ try{ const q = indexedDB.open("toto-images",1); q.onupgradeneeded=()=>q.result.createObjectStore("img"); q.onsuccess=()=>res(q.result); q.onerror=()=>res(null); }catch{ res(null); } });
-async function idbAll(){ const d = await idb; if (!d) return; await new Promise(ok=>{ const t = d.transaction("img").objectStore("img").openCursor();
-  t.onsuccess = ()=>{ const cur = t.result; if (!cur) return ok(); setGen(cur.key, cur.value); cur.continue(); }; t.onerror = ()=>ok(); }); }
-async function idbPut(k, v){ const d = await idb; if (!d) return; await new Promise(ok=>{ const t = d.transaction("img","readwrite"); t.objectStore("img").put(v,k); t.oncomplete=ok; t.onerror=ok; }); }
-function setGen(k, blob){ if (genUrls[k]) URL.revokeObjectURL(genUrls[k]); genBlobs[k] = blob; genUrls[k] = URL.createObjectURL(blob); }
-function saveBlob(blob, name){ const a = el("a",{href:URL.createObjectURL(blob),download:name}); document.body.append(a); a.click(); a.remove(); }
+const busy = new Set();
 function imageControls(ep, p, c){
   const key = `${ep.id}/${c.img}`, st = el("span",{class:"sub"});
-  const go = el("button",{class:"btn small go",text: genBlobs[key] ? "다시 만들기" : "GPT로 그림 만들기"});
+  const go = el("button",{class:"btn small go",text: busy.has(key) ? "그리는 중…" : genUrls[key] ? "다시 만들기" : "Codex로 그림 만들기", disabled: busy.has(key) || null});
   go.addEventListener("click", async ()=>{
-    if (!cfg().key){ st.textContent = ERR.no_key; $("#setPanel").scrollIntoView({behavior:"smooth"}); return; }
-    go.disabled = true; st.textContent = "그리는 중입니다. 30초~1분 걸립니다.";
+    if (!CODEX){ st.textContent = ERR.no_codex; return; }
+    busy.add(key); go.disabled = true; go.textContent = "그리는 중…"; st.textContent = "Codex가 그리는 중입니다. 1~3분 걸립니다. 다른 그림은 순서대로 기다립니다.";
     try{
-      const refs = await refsFor(ep, c);
-      const blob = await gptImage(c.imagePrompt, refs);
-      setGen(key, blob); await idbPut(key, blob); renderEp(); toast(`그림 ${c.img}을(를) 만들었습니다`);
-    }catch(e){ st.textContent = e?.code==="api" ? e.message : (ERR[e?.code] || "그림을 만들지 못했습니다."); go.disabled = false; }
+      const j = await post("/api/image", {ep: ep.id, img: c.img, prompt: c.imagePrompt, refs: refsFor(ep, c)});
+      genUrls[key] = j.url.replace(/^\//,""); busy.delete(key); renderEp(); toast(`그림 ${c.img}을(를) 만들었습니다`);
+    }catch(e){ busy.delete(key); st.textContent = e?.message || "그림을 만들지 못했습니다."; go.disabled = false; go.textContent = genUrls[key] ? "다시 만들기" : "Codex로 그림 만들기"; }
   });
   return el("div",{class:"row"}, go,
-    genBlobs[key] ? el("button",{class:"btn small ghost",text:"PC에 저장",onclick:()=>saveBlob(genBlobs[key], `${ep.no}화_그림${c.img}.png`)}) : null,
+    genUrls[key] ? el("a",{class:"btn small ghost",href:genUrls[key],target:"_blank",rel:"noopener",text:"크게 보기"}) : null,
     el("span",{class:"sub",text: c.attach ? `참조: ${c.attach}` : "참조 그림 없이 만듭니다"}), st);
 }
 
@@ -651,16 +610,16 @@ function start(){
   const cl = window.claude;
   if (!cl?.use){
     clearTimeout(giveUp);
-    $("#setPanel").hidden = false; loadCfg(); sample = gptText;
-    $("#sSave").addEventListener("click", ()=>{ store.set("cfg", {key:$("#sKey").value.trim(), text:$("#sText").value.trim(), img:$("#sImg").value.trim(), q:$("#sQ").value}); loadCfg(); toast("저장했습니다"); });
-    $("#sClear").addEventListener("click", ()=>{ store.set("cfg", {...cfg(), key:""}); loadCfg(); toast("키를 지웠습니다"); });
+    $("#setPanel").hidden = false; sample = codexText;
+    if (!CODEX){ $("#keyState").textContent = "연결 안 됨"; $("#codexNote").textContent = "시작.html을 바로 열면 Codex를 쓸 수 없습니다. 같은 폴더의 시작.bat(맥은 시작.command)을 두 번 눌러 여세요."; }
+    else fetch("/api/ping").then(r=>r.json()).then(j=>{ $("#keyState").textContent = j.codex ? "연결됨" : "Codex 없음";
+      if (!j.codex) $("#codexNote").textContent = "이 PC에서 codex 명령을 찾지 못했습니다. Codex CLI를 설치하고 로그인한 뒤 시작.bat을 다시 켜 주세요."; }).catch(()=>{ $("#keyState").textContent = "연결 안 됨"; });
     const boot = ()=>{
       let saved = store.get("eps", null);
       if (!saved || !saved.length){ saved = window.TOTO_EP1 ? [window.TOTO_EP1] : []; store.set("eps", saved); }
-      idbAll().then(()=>setEps(saved));
+      Promise.all(saved.map(loadGenerated)).then(()=>setEps(saved));
     };
-    const sc = document.createElement("script"); sc.src = "자료/refs.js"; sc.onload = boot;
-    sc.onerror = ()=>{ toast("자료/refs.js를 찾지 못해 참조 그림 없이 동작합니다"); boot(); };
+    const sc = document.createElement("script"); sc.src = "자료/ep1.js"; sc.onload = boot; sc.onerror = boot;
     document.head.append(sc);
     return;
   }
