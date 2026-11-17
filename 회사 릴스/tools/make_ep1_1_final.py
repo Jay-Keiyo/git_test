@@ -17,6 +17,7 @@ from PIL import Image, ImageDraw, ImageFont
 W, H, FPS, RATE = 1080, 1920, 24, 44100  # Flow 클립과 같은 초당 24장
 FONT = "/usr/share/fonts/truetype/nanum/NanumSquareRoundB.ttf"
 clips, pics, out = Path(sys.argv[1]), Path(sys.argv[2]), Path(sys.argv[3])
+voice_file = Path(sys.argv[4]) if len(sys.argv) > 4 else None  # ElevenLabs 등으로 만든 1-1화 대사 한 파일
 work = out.parent / "_work"
 work.mkdir(parents=True, exist_ok=True)
 
@@ -83,28 +84,74 @@ def clip_audio(path):
     return [s / 32768 for s in struct.unpack(f"<{len(raw) // 2}h", raw)]
 
 
+# 대사 파일 속 각 줄의 위치(초)와 컷 안에서 시작할 시각(초)
+LINES = {  # 줄: (파일에서 시작, 끝)
+    1: (0.15, 3.25), 2: (3.50, 5.18), 3: (5.22, 7.38), 4: (7.40, 9.52), 5: (10.02, 11.32), 6: (11.34, 12.90)}
+PLACE = {"c1.mp4": [(1, 0.6)], "c3.mp4": [(2, 0.45)], "c4.mp4": [(3, 0.35), (4, 3.4)], "table": [(5, 0.6), (6, 2.9)]}
+voice = clip_audio(voice_file) if voice_file else None
+
+
+def with_voice(key, base):
+    """voice가 있으면 그 컷의 원래 목소리를 빼고 대사 줄을 얹는다."""
+    if voice is None or key not in PLACE:
+        return base
+    if key != "table":  # 원래 클립 소리(Flow 목소리)를 빼고 아주 작은 방 소음만 깐다
+        rnd, lp, mixed = random.Random(7), 0.0, []
+        for _ in base:
+            lp = 0.985 * lp + 0.015 * rnd.uniform(-1, 1)
+            mixed.append(lp * 0.05)
+    else:
+        mixed = list(base)
+    for line, at in PLACE[key]:
+        a, b = LINES[line]
+        piece = voice[int(a * RATE):int(b * RATE)]
+        fade = int(0.03 * RATE)
+        for i, v in enumerate(piece):
+            g = min(1, i / fade, (len(piece) - i) / fade)
+            j = int(at * RATE) + i
+            if j < len(mixed):
+                mixed[j] += v * g
+    return mixed
+
+
+def say(line, key):
+    """대사 줄이 그 컷 안에서 나오는 구간 (자막 시간)."""
+    if voice is None:
+        return None
+    for ln, at in PLACE.get(key, []):
+        if ln == line:
+            a, b = LINES[line]
+            return at, at + (b - a) + 0.15
+    return None
+
+
+def show(t, line, key, default):
+    rng = say(line, key) or default
+    return rng[0] <= t < rng[1]
+
+
 # 컷 목록: (클립 경로 또는 None, 길이(초), 자막 함수)
 def subs_c1(fr, t):
     if t < 2.0:
         tag(fr, "수험 생활 3년")
-    if 2.2 < t < 3.95:
+    if show(t, 1, "c1.mp4", (2.2, 3.95)):
         subtitle(fr, "제발… 제발…")
 
 
 def subs_c3(fr, t):
-    if 0.6 < t < 2.0:
+    a, b = say(2, "c3.mp4") or (0.6, 3.6)
+    mid = a + (b - a) * 0.45
+    if a < t < mid:
         subtitle(fr, "됐다!!!", size=96)
-    elif 2.0 <= t < 3.6:
+    elif mid <= t < b:
         subtitle(fr, "붙었다!!!", size=96)
 
 
 def subs_c4(fr, t):
-    if t < 2.3:
+    if show(t, 3, "c4.mp4", (0, 2.3)):
         subtitle(fr, "엄마! 나 붙었어!")
-    elif 2.4 < t < 4.9:
-        subtitle(fr, "응, 공기업!")
-    elif 4.95 < t < 6.9:
-        subtitle(fr, "정년 보장!")
+    elif show(t, 4, "c4.mp4", (2.4, 6.9)):
+        subtitle(fr, "응, 공기업! 정년 보장!")
 
 
 img5 = mosaic(Image.open(pics / "5.png").convert("RGB"), (0.44, 0.584, 0.905, 0.637))
@@ -113,10 +160,10 @@ img5 = mosaic(Image.open(pics / "5.png").convert("RGB"), (0.44, 0.584, 0.905, 0.
 def table(t, d=6.0):  # 표를 훑어 내려가 모자이크 된 근무지 줄로 확대
     k = ease(t / 4.2)
     fr = view(img5, 0.5 - 0.10 * k, 0.36 + 0.25 * k, 1.0 + 0.8 * k)
-    if 0.6 < t < 2.6:
-        subtitle(fr, "어디 보자…")
-    elif 3.0 < t < 5.8:
-        subtitle(fr, "근무지가…")
+    if show(t, 5, "table", (0.6, 2.6)):
+        subtitle(fr, "어디 보자…", y=0.75)
+    elif show(t, 6, "table", (3.0, 5.6)):
+        subtitle(fr, "근무지가…", y=0.75)
     return Image.blend(fr, Image.new("RGB", (W, H), "black"), min(max((t - 5.6) / 0.4, 0), 1))
 
 
@@ -152,13 +199,13 @@ for idx, (name, subs) in enumerate((("c1.mp4", subs_c1), ("c2.mp4", None), ("c3.
                 subs(fr, n / FPS)
             yield fr
     seg = work / f"seg{idx}.mov"
-    segments.append((seg, encode(seg, frames(), clip_audio(clips / name))))
+    segments.append((seg, encode(seg, frames(), with_voice(name, clip_audio(clips / name)))))
 
 random.seed(3)
-drone = [0.35 * (i / RATE / 5.6) * math.sin(2 * math.pi * (55 - 2 * i / RATE) * i / RATE) if i < 5.6 * RATE else 0.0
+drone = [0.06 * (i / RATE / 5.6) * math.sin(2 * math.pi * (55 - 2 * i / RATE) * i / RATE) if i < 5.6 * RATE else 0.0
          for i in range(6 * RATE)]
 seg = work / "seg4.mov"
-segments.append((seg, encode(seg, (table(i / FPS) for i in range(6 * FPS)), drone)))
+segments.append((seg, encode(seg, (table(i / FPS) for i in range(6 * FPS)), with_voice("table", drone))))
 seg = work / "seg5.mov"
 segments.append((seg, encode(seg, (end_card(i / FPS) for i in range(3 * FPS)), [0.0] * (3 * RATE))))
 
