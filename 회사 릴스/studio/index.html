@@ -458,7 +458,8 @@ ${CAST.map(c=>`- ${c.desc} 성격: ${c.notes.join(" / ")}`).join("\n")}
 [영상 프롬프트 규칙] (Google Flow에 붙여 넣는 영어 문장, flowPrompt. tool이 "flow"인 컷만)
 - 인물이 나오는 컷은 반드시 이 문장으로 시작한다: "Animate the provided start frame exactly as it is. Keep the same stylized 3D cartoon art style as an animated feature film, with the same big round cartoon eyes, simple shapes and soft colors. Keep the exact same character design, face, hair, clothes, props and room from the image. Not photorealistic, not live action, no realistic human skin, no new characters."
 - 그다음 형식: "<동작 한 가지>. He/She says in Korean, \\"<대사>\\".\\nCamera: <카메라>.\\nAudio: <소리와 목소리 설명>. No music.\\nNo subtitles, no on-screen text, no captions."
-- 김토토의 목소리는 항상 "a soft, slightly high young male voice"로 적는다.
+- 인물은 반드시 나이를 적은 성인으로 쓴다 (예: "The character is a 28-year-old adult man"). "young", "boy", "girl", "kid"는 쓰지 않는다. 귀여운 만화 그림체라 미성년자로 오인되어 생성이 거절되기 때문이다.
+- 김토토의 목소리는 항상 "a soft adult male voice in his late twenties"로 적는다.
 - tool이 "edit"인 컷은 flowPrompt를 빈 문자열로 둔다.`;
 }
 const FORMAT = `[출력 형식] 설명 없이 아래 JSON 하나만 출력한다. 코드 블록 표시도 넣지 않는다.

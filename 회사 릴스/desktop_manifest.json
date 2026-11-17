@@ -2,7 +2,7 @@
  "files": {
   "시작.html": {
    "src": "회사 릴스/studio/index.html",
-   "sha256": "cf8be047f1d4bdcb6473e5674be8404aec98d9f96d5fd3cd717b44a8e6a699af"
+   "sha256": "c9e777b83ebacc70f42c50ac3f362cb24e0f21678cd9e08b65eb0f3babda1707"
   },
   "server.py": {
    "src": "회사 릴스/studio/server.py",
@@ -22,7 +22,7 @@
   },
   "자료/ep1.js": {
    "src": "회사 릴스/studio/ep1.js",
-   "sha256": "30b14f6ff592a2c622ebeb953c6cfabd29c30e4742b6f6ba4fa7839137c989de"
+   "sha256": "46c0a71316a5c7ec520f81ac595054a0461fb2d9900e10523b87ad353edc1751"
   },
   "자료/AGENTS.md": {
    "src": "회사 릴스/AGENTS.md",
@@ -50,7 +50,7 @@
   },
   "자료/06_ep1_script_flow.md": {
    "src": "회사 릴스/06_ep1_script_flow.md",
-   "sha256": "b3ebc6c918edff888084d00ebfc7fd507a4a5f578dccc0dac609055f49cb496a"
+   "sha256": "dda2cfbecb4e463ec21cf02db9305b9a3c5ca49ed79d877eb1704e069e687d7b"
   },
   "자료/assets/characters/choi-taesan.webp": {
    "src": "회사 릴스/assets/characters/choi-taesan.webp",
@@ -202,7 +202,7 @@
   },
   "자료/episodes/ep1.json": {
    "src": "회사 릴스/episodes/ep1.json",
-   "sha256": "5323f11c8ffd313eff908b30e0e5d34f8926dc0a17d5e242b202ebbe587ef124"
+   "sha256": "7dfc7a4462e2fe9dec1782d5f6d50968b87c4d7022353730124eb8a5d17e3881"
   },
   "자료/preview/ep1-1_preview.mp4": {
    "src": "회사 릴스/preview/ep1-1_preview.mp4",

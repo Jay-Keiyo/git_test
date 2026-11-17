@@ -33,7 +33,8 @@
 
 ```
 Animate the provided start frame exactly as it is. Keep the same stylized 3D cartoon art style as an animated feature film, with the same big round cartoon eyes, simple shapes and soft colors. Keep the exact same character design, face, hair, clothes, props and room from the image. Not photorealistic, not live action, no realistic human skin, no new characters.
-The young man stares at the laptop screen, tense. He swallows hard, his finger trembles on the mouse. He whispers in Korean, "제발… 제발…", then clicks the mouse once. The single cowlick on top of his hair quivers.
+The character is a 28-year-old adult man, a job seeker in his late twenties.
+The man stares at the laptop screen, tense. He swallows hard, his finger trembles on the mouse. He whispers in Korean, "제발… 제발…", then clicks the mouse once. The single cowlick on top of his hair quivers.
 Camera: very slow push-in on his face. Lighting stays the same: dark room, blue screen glow.
 Audio: quiet room tone, one mouse click. A soft, slightly high young male voice. No music.
 No subtitles, no on-screen text, no captions.
@@ -55,9 +56,10 @@ No subtitles, no captions, no new on-screen text.
 
 ```
 Animate the provided start frame exactly as it is. Keep the same stylized 3D cartoon art style as an animated feature film, with the same big round cartoon eyes, simple shapes and soft colors. Keep the exact same character design, face, hair, clothes, props and room from the image. Not photorealistic, not live action, no realistic human skin, no new characters.
-The young man pumps both fists in the air and jumps up and down with joy, eyes squeezed shut, laughing. He shouts in Korean, "됐다! 붙었다!". The cowlick on top of his hair stands straight up.
+The character is a 28-year-old adult man, a job seeker in his late twenties.
+The man pumps both fists in the air and jumps up and down with joy, eyes squeezed shut, laughing. He shouts in Korean, "됐다! 붙었다!". The cowlick on top of his hair stands straight up.
 Camera: slight handheld shake, energetic. Same dark room with blue screen glow.
-Audio: his excited shout, a soft slightly high young male voice, chair wheels rolling. No music.
+Audio: his excited shout, a soft adult male voice in his late twenties, chair wheels rolling. No music.
 No subtitles, no on-screen text, no captions.
 ```
 
@@ -65,9 +67,10 @@ No subtitles, no on-screen text, no captions.
 
 ```
 Animate the provided start frame exactly as it is. Keep the same stylized 3D cartoon art style as an animated feature film, with the same big round cartoon eyes, simple shapes and soft colors. Keep the exact same character design, face, hair, clothes, props and room from the image. Not photorealistic, not live action, no realistic human skin, no new characters.
-The young man holds the phone to his ear, crying happy tears and laughing, wiping his eye with the back of his hand. He says in Korean, "엄마! 나 붙었어! 응, 공기업! 정년 보장!". He nods quickly while talking.
+The character is a 28-year-old adult man, a job seeker in his late twenties.
+The man holds the phone to his ear, laughing with joy and a little teary-eyed, quickly wiping the corner of his eye with the back of his hand. He says in Korean, "엄마! 나 붙었어! 응, 공기업! 정년 보장!". He nods quickly while talking.
 Camera: gentle handheld, slow drift to the right. Same dark room.
-Audio: his tearful happy voice, a soft slightly high young male voice. No music.
+Audio: his tearful happy voice, a soft adult male voice in his late twenties. No music.
 No subtitles, no on-screen text, no captions.
 ```
 
@@ -94,9 +97,10 @@ No subtitles, no on-screen text, no captions.
 
 ```
 Animate the provided start frame exactly as it is. Keep the same stylized 3D cartoon art style as an animated feature film, with the same big round cartoon eyes, simple shapes and soft colors. Keep the exact same character design, face, hair, clothes, props and room from the image. Not photorealistic, not live action, no realistic human skin, no new characters.
-The young man's wide smile stays frozen on his face while his eyes slowly grow wider. A drop of sweat runs down his temple. The cowlick on top of his hair slowly bends and flops to the side. After a pause he says quietly in Korean, "…나무읍?", then, "거기가… 어디야?". He blinks twice.
+The character is a 28-year-old adult man, a job seeker in his late twenties.
+The man's wide smile stays frozen on his face while his eyes slowly grow wider. A drop of sweat runs down his temple. The cowlick on top of his hair slowly bends and flops to the side. After a pause he says quietly in Korean, "…나무읍?", then, "거기가… 어디야?". He blinks twice.
 Camera: locked-off close-up, no movement. Blue screen glow on his face.
-Audio: dead silence, then his small confused voice, a soft slightly high young male voice. No music.
+Audio: dead silence, then his small confused voice, a soft adult male voice in his late twenties. No music.
 No subtitles, no on-screen text, no captions.
 ```
 
@@ -138,9 +142,10 @@ No subtitles, no on-screen text, no captions.
 
 ```
 Animate the provided start frame exactly as it is. Keep the same stylized 3D cartoon art style as an animated feature film, with the same big round cartoon eyes, simple shapes and soft colors. Keep the exact same character design, face, hair, clothes, props and room from the image. Not photorealistic, not live action, no realistic human skin, no new characters.
-The young man sits stiffly in his chair under the warm desk lamp. He takes a long deep breath, forces an awkward smile and nods to himself. He says in Korean, slowly, "설마… 가보면 다르겠지. 처음부터 겁먹지 말자.". The bent cowlick on his hair tries to stand up, then droops again.
+The character is a 28-year-old adult man, a job seeker in his late twenties.
+The man sits stiffly in his chair under the warm desk lamp. He takes a long deep breath, forces an awkward smile and nods to himself. He says in Korean, slowly, "설마… 가보면 다르겠지. 처음부터 겁먹지 말자.". The bent cowlick on his hair tries to stand up, then droops again.
 Camera: locked-off, very slow push-in.
-Audio: his quiet unsure voice, a soft slightly high young male voice, a soft hopeful piano note at the end.
+Audio: his quiet unsure voice, a soft adult male voice in his late twenties, a soft hopeful piano note at the end.
 No subtitles, no on-screen text, no captions.
 ```
 
