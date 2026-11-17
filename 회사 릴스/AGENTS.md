@@ -65,3 +65,8 @@
 - `05_ep1_gpt_scenes.md` 1화 장면 프롬프트
 - `06_ep1_script_flow.md` 1화 대본(1-1, 1-2, 1-3)과 영상 프롬프트
 - `episodes/ep1.json` 1화 자료 (편, 컷, 프롬프트)
+
+## 바탕화면 폴더 업데이트 (Claude/Codex 작업자용)
+
+바탕화면 「흙수저 김토토」 폴더는 켜질 때 `desktop_manifest.json`을 보고 바뀐 파일만 GitHub에서 받아 간다.
+`studio/`, `assets/`, `episodes/`, `preview/`, 문서를 고친 뒤에는 `python3 tools/build_desktop.py`로 구성표를 다시 만들어 함께 커밋·푸시한다.

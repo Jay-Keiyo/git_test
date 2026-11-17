@@ -1,5 +1,5 @@
 {
-  "command": ["codex", "exec", "--skip-git-repo-check", "--full-auto"],
+  "command": ["codex", "exec", "--skip-git-repo-check", "--sandbox", "workspace-write"],
   "prompt_via": "stdin",
   "timeout_seconds": 900
 }

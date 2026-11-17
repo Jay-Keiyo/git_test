@@ -73,6 +73,9 @@ details.pr summary{cursor:pointer;padding:6px 10px;font-size:13px;display:flex;g
 details.pr pre{margin:0;padding:10px;border-top:1px solid var(--line);font-family:var(--mono);font-size:12.5px;white-space:pre-wrap;word-break:break-word;line-height:1.55}
 .ending{font-size:13.5px;color:var(--muted)}
 .partfix{margin-top:-4px}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px}
+.gallery a{display:flex;flex-direction:column;gap:4px;color:var(--muted);font-size:12px;text-decoration:none;min-width:0}
+.gallery img{width:100%;aspect-ratio:9/16;object-fit:cover;border-radius:8px;background:var(--sunk)}
 .ending b{color:var(--fg)}
 /* 인물 */
 .cast{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
@@ -129,6 +132,21 @@ canvas#stage{width:100%;max-width:300px;aspect-ratio:9/16;background:#000;border
         <span class="sub" id="keyState">확인 중</span>
       </div>
       <p class="sub" id="codexNote">이 PC의 Codex가 대본을 쓰고 그림을 만듭니다. 만든 그림은 자료/만든그림 폴더에 저장됩니다. 한 번에 하나씩 처리하고, 그림 한 장에 1~3분 걸립니다.</p>
+    </div>
+
+    <div class="panel" id="freePanel" hidden>
+      <h2>그림 요청</h2>
+      <p class="sub">원하는 장면을 적으면 Codex가 확정 인물 그림을 참조해 바로 그립니다. 만든 그림은 자료/만든그림/요청 폴더에 저장됩니다.</p>
+      <label class="f">어떤 그림이 필요한가요<textarea id="fReq" placeholder="예: 조궁화 부장이 결재 서류를 책상에 던지며 화내고, 김토토 사원이 고개를 숙이고 서 있다. 낡은 시골 사무실, 형광등."></textarea></label>
+      <div>
+        <p class="sub" style="margin-bottom:6px">나오는 인물 (참조로 넣을 그림)</p>
+        <div class="chips" id="fCast"></div>
+      </div>
+      <div class="row">
+        <button class="btn go" id="fGo">그림 만들기</button>
+        <span class="sub" id="fState"></span>
+      </div>
+      <div id="fGallery" class="gallery"></div>
     </div>
 
     <div class="panel" id="newPanel" hidden>
@@ -602,6 +620,44 @@ function imageControls(ep, p, c){
     el("span",{class:"sub",text: c.attach ? `참조: ${c.attach}` : "참조 그림 없이 만듭니다"}), st);
 }
 
+/* ───── 자유 그림 요청 ───── */
+const FREE_CAST = [["kim-toto_before","김토토 (입사 전)"], ...CAST.map(c=>[c.id, c.name]), ["jo-gunghwa_angry","조궁화 (화남)"]];
+function setupFree(){
+  $("#freePanel").hidden = false;
+  for (const [id,name] of FREE_CAST) $("#fCast").append(el("button",{class:"chip","aria-pressed":"false","data-id":id,text:name,
+    onclick:(e)=>{ const b=e.currentTarget; b.setAttribute("aria-pressed", String(b.getAttribute("aria-pressed")!=="true")); }}));
+  $("#fGo").addEventListener("click", freeGo);
+  loadFree();
+}
+async function loadFree(){
+  try{
+    const j = await (await fetch("/api/images?ep=요청")).json();
+    const names = (j.images||[]).filter(n=>!/_old_/.test(n)).sort().reverse();
+    $("#fGallery").replaceChildren(...names.map(n=>el("a",{href:`자료/만든그림/요청/${n}.png`,target:"_blank",rel:"noopener"},
+      el("img",{src:`자료/만든그림/요청/${n}.png`,alt:n,loading:"lazy"}), el("span",{text:n}))));
+  }catch{}
+}
+async function freeGo(){
+  const req = $("#fReq").value.trim(), st = $("#fState"), btn = $("#fGo");
+  if (!req){ st.textContent = "어떤 그림이 필요한지 적어 주세요."; return; }
+  if (!CODEX){ st.textContent = ERR.no_codex; return; }
+  const ids = [...document.querySelectorAll("#fCast .chip[aria-pressed=true]")].map(b=>b.dataset.id);
+  const names = ids.map(id=>FREE_CAST.find(x=>x[0]===id)[1]);
+  const d = new Date(), pad = n=>String(n).padStart(2,"0");
+  const img = `${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}-${pad(d.getHours())}${pad(d.getMinutes())}${pad(d.getSeconds())}`;
+  const prompt = [
+    names.length ? `첨부한 캐릭터(${names.join(", ")})를 얼굴, 피부색, 머리카락, 머리 위 식물, 옷까지 똑같이 유지해서 그려줘. 캐릭터는 같은 3D 애니메이션 그림체, 배경은 사실적인 한국의 일상 공간.` :
+      "3D 애니메이션 그림체의 장면. 배경은 사실적인 한국의 일상 공간.",
+    "세로 9:16.", "", req, "",
+    "화면 맨 아래 20%와 오른쪽 아래 구석에는 얼굴이나 손이 오지 않게 해줘. 요청에 적힌 글자 외의 글자와 워터마크 없이."].join("\n");
+  btn.disabled = true; st.textContent = "Codex가 그리는 중입니다. 1~3분 걸립니다.";
+  try{
+    await post("/api/image", {ep:"요청", img, prompt, refs: ids.map(id=>`assets/characters/${id}.webp`)});
+    st.textContent = "만들었습니다. 아래 목록 맨 앞에 있습니다."; loadFree();
+  }catch(e){ st.textContent = e?.message || "그림을 만들지 못했습니다."; }
+  finally{ btn.disabled = false; }
+}
+
 /* ───── 시작 ───── */
 function start(){
   showTab(store.get("tab","ep"));
@@ -610,7 +666,7 @@ function start(){
   const cl = window.claude;
   if (!cl?.use){
     clearTimeout(giveUp);
-    $("#setPanel").hidden = false; sample = codexText;
+    $("#setPanel").hidden = false; sample = codexText; setupFree();
     if (!CODEX){ $("#keyState").textContent = "연결 안 됨"; $("#codexNote").textContent = "시작.html을 바로 열면 Codex를 쓸 수 없습니다. 같은 폴더의 시작.bat(맥은 시작.command)을 두 번 눌러 여세요."; }
     else fetch("/api/ping").then(r=>r.json()).then(j=>{ $("#keyState").textContent = j.codex ? "연결됨" : "Codex 없음";
       if (!j.codex) $("#codexNote").textContent = "이 PC에서 codex 명령을 찾지 못했습니다. Codex CLI를 설치하고 로그인한 뒤 시작.bat을 다시 켜 주세요."; }).catch(()=>{ $("#keyState").textContent = "연결 안 됨"; });

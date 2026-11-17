@@ -1,0 +1,220 @@
+{
+ "files": {
+  "시작.html": {
+   "src": "회사 릴스/studio/index.html",
+   "sha256": "cf8be047f1d4bdcb6473e5674be8404aec98d9f96d5fd3cd717b44a8e6a699af"
+  },
+  "server.py": {
+   "src": "회사 릴스/studio/server.py",
+   "sha256": "2c28b4e60f9acb1a247a8f16c40e2d667d6d707b49f3d945a599561e0921186f"
+  },
+  "시작.bat": {
+   "src": "회사 릴스/studio/시작.bat",
+   "sha256": "984cfa5a68ed50c4f785fb5e86a369d2dadfdf1cebf86f6932038e95deb50417"
+  },
+  "시작.command": {
+   "src": "회사 릴스/studio/시작.command",
+   "sha256": "b9e6a0036f40e8ad0dc1dcb6ef6122d4cba1d906a3734aaa1e5f66404ba834be"
+  },
+  "읽어주세요.txt": {
+   "src": "회사 릴스/studio/읽어주세요.txt",
+   "sha256": "bd6b78c12c21786353c1ed96dd87a887e89620b587b7652e54d3ae46102f26da"
+  },
+  "자료/ep1.js": {
+   "src": "회사 릴스/studio/ep1.js",
+   "sha256": "30b14f6ff592a2c622ebeb953c6cfabd29c30e4742b6f6ba4fa7839137c989de"
+  },
+  "자료/AGENTS.md": {
+   "src": "회사 릴스/AGENTS.md",
+   "sha256": "94e9c2fecfd0fc8c70ca28edde9a24e3f1c899286a29f39e9cd262d955817b27"
+  },
+  "자료/01_characters.md": {
+   "src": "회사 릴스/01_characters.md",
+   "sha256": "d73d01370f67811ce29180ed56c0a50379bf3e1c4af5a8723a7cc1557f899c2f"
+  },
+  "자료/02_episodes.md": {
+   "src": "회사 릴스/02_episodes.md",
+   "sha256": "45000f8150691cb60a871739aec615a7979c4647ebc6f0737a8e378a5a5d4ca9"
+  },
+  "자료/03_gpt_prompts_ko.md": {
+   "src": "회사 릴스/03_gpt_prompts_ko.md",
+   "sha256": "3d0051b9d04130d714e592707429dfdf693f6fcd30cc15d5c405854e6e1faa1a"
+  },
+  "자료/04_ep1_production.md": {
+   "src": "회사 릴스/04_ep1_production.md",
+   "sha256": "54d9de621ba313660cc6b5f7c5167926554db947f1988530424d421a2b7821be"
+  },
+  "자료/05_ep1_gpt_scenes.md": {
+   "src": "회사 릴스/05_ep1_gpt_scenes.md",
+   "sha256": "ba1e1a2c000dcf8e7e46166aa52c12dea9c1f95b7542705c71edeea3bc6712b4"
+  },
+  "자료/06_ep1_script_flow.md": {
+   "src": "회사 릴스/06_ep1_script_flow.md",
+   "sha256": "b3ebc6c918edff888084d00ebfc7fd507a4a5f578dccc0dac609055f49cb496a"
+  },
+  "자료/assets/characters/choi-taesan.webp": {
+   "src": "회사 릴스/assets/characters/choi-taesan.webp",
+   "sha256": "9412cf780dda26904a03a1aae4e79ab98a7e4fca5f4db448bdd5fc0f7f23d3ae"
+  },
+  "자료/assets/characters/group_post.webp": {
+   "src": "회사 릴스/assets/characters/group_post.webp",
+   "sha256": "f837bd2410dc9ceb8b0556ab461661886bc916652237a84aed188fec5794d56a"
+  },
+  "자료/assets/characters/group_reels.webp": {
+   "src": "회사 릴스/assets/characters/group_reels.webp",
+   "sha256": "3dc39458cde58d930c1db5ec6c6790ec96bfd77fc14d1792dfd4a9335c27597b"
+  },
+  "자료/assets/characters/idcards.webp": {
+   "src": "회사 릴스/assets/characters/idcards.webp",
+   "sha256": "7b7b03c4ead6d9c68885532ccec4e34d5ca86454463f54eb38dc5810dd0ed98f"
+  },
+  "자료/assets/characters/jo-gunghwa.webp": {
+   "src": "회사 릴스/assets/characters/jo-gunghwa.webp",
+   "sha256": "f9eba0e4e66d0c2f78edb4d210de521637008b9596c2d639c578f761bac52f33"
+  },
+  "자료/assets/characters/jo-gunghwa_angry.webp": {
+   "src": "회사 릴스/assets/characters/jo-gunghwa_angry.webp",
+   "sha256": "d8fb9ef7fa5594f3dd02b93964310aeeb11d0c4771287df7ba5424da4d2567e7"
+  },
+  "자료/assets/characters/kim-toto.webp": {
+   "src": "회사 릴스/assets/characters/kim-toto.webp",
+   "sha256": "1c5f366c53af50740fabf577024d808c5fc74ca1bc4717c4dd3dfa2df3290a35"
+  },
+  "자료/assets/characters/kim-toto_before.webp": {
+   "src": "회사 릴스/assets/characters/kim-toto_before.webp",
+   "sha256": "a6e9ef96ce8c15ab839c743f9a3b54c2690ffd06bbb9f4b34e0ee03190fee23f"
+  },
+  "자료/assets/characters/kim-toto_expressions.webp": {
+   "src": "회사 릴스/assets/characters/kim-toto_expressions.webp",
+   "sha256": "1a0fa91ce0a5462ea67e3d599286fc7a6f771ce8f1cd84b7630308979b1be3a1"
+  },
+  "자료/assets/characters/lee-jeongwon.webp": {
+   "src": "회사 릴스/assets/characters/lee-jeongwon.webp",
+   "sha256": "1d55afdddabafb5d8cc541176b9e4d453ca5bf5d9900a135e0d7c56c30dfbbd4"
+  },
+  "자료/assets/characters/lee-nancho.webp": {
+   "src": "회사 릴스/assets/characters/lee-nancho.webp",
+   "sha256": "fab02b954e6e948de55b85e10c645d51e977b82d5c82a34e581654a5c2837e5b"
+  },
+  "자료/assets/characters/park-toyang.webp": {
+   "src": "회사 릴스/assets/characters/park-toyang.webp",
+   "sha256": "7aa39f43671b357bf2a12974611d07543351bc7aff7a9da6bd42cce4e60b937f"
+  },
+  "자료/assets/ep1/01.webp": {
+   "src": "회사 릴스/assets/ep1/01.webp",
+   "sha256": "a3c9222b025b0efe188e2f856b14a946fffefa5f3cf2ce68fdbc0228e961df89"
+  },
+  "자료/assets/ep1/02.webp": {
+   "src": "회사 릴스/assets/ep1/02.webp",
+   "sha256": "fd2ca1c507c61f0c9b7778b518fe68cd02d120fbe216a13ed801409f1d98c94e"
+  },
+  "자료/assets/ep1/03.webp": {
+   "src": "회사 릴스/assets/ep1/03.webp",
+   "sha256": "711e1f7b63b28d366a60d59472f452e79ae41b39b8572ab2dcd0d3a120d65531"
+  },
+  "자료/assets/ep1/04.webp": {
+   "src": "회사 릴스/assets/ep1/04.webp",
+   "sha256": "06ba76c915eaae1deec30c8d94428a01ff1ab369c1880f67ba9f81bf34330b07"
+  },
+  "자료/assets/ep1/05.webp": {
+   "src": "회사 릴스/assets/ep1/05.webp",
+   "sha256": "5b33aaf98e8b55e26df37c98ee27e3fc48ed8c80c29abb481778b47c6a2209d4"
+  },
+  "자료/assets/ep1/06.webp": {
+   "src": "회사 릴스/assets/ep1/06.webp",
+   "sha256": "7b5004d43b0c90f6c4e98f561d11503c6e89d67946d5b697f439b11cb9410304"
+  },
+  "자료/assets/ep1/07.webp": {
+   "src": "회사 릴스/assets/ep1/07.webp",
+   "sha256": "1a28082bc33e073e2c327a7ddbc09f1394d45c9fc9b10270f47bd57d78a9d816"
+  },
+  "자료/assets/ep1/08.webp": {
+   "src": "회사 릴스/assets/ep1/08.webp",
+   "sha256": "47a51d88fb350d919ec6dca30bd395d39adaac233813c9496a83107565740fad"
+  },
+  "자료/assets/ep1/09.webp": {
+   "src": "회사 릴스/assets/ep1/09.webp",
+   "sha256": "95a933626a043078090585562cc33ea6623df41dc785dc39868e13fe0e1a8019"
+  },
+  "자료/assets/ep1/10-1.webp": {
+   "src": "회사 릴스/assets/ep1/10-1.webp",
+   "sha256": "b956b9425a6b4ec3babe9eae5d0c8bf50ef6fa42abe58b36e63d9afbdb008b08"
+  },
+  "자료/assets/ep1/11.webp": {
+   "src": "회사 릴스/assets/ep1/11.webp",
+   "sha256": "4e47c11cc06599ab89683d0897f1772076e8302312943e6f9562b5cc8d66f658"
+  },
+  "자료/assets/ep1/12.webp": {
+   "src": "회사 릴스/assets/ep1/12.webp",
+   "sha256": "3187fbe4a2ddabb87075522a946f0f431431e8ebd2e1c06bede46613e97eec9c"
+  },
+  "자료/assets/idcards/1_kim-toto.png": {
+   "src": "회사 릴스/assets/idcards/1_kim-toto.png",
+   "sha256": "8548947c6fa7ae4e04828442a624c86fbf269b882e2a25848585776ea37fabc1"
+  },
+  "자료/assets/idcards/2_lee-jeongwon.png": {
+   "src": "회사 릴스/assets/idcards/2_lee-jeongwon.png",
+   "sha256": "eed9868478f7152b07a50d19629daa1aaa1c92027165d32fe577a30c7bbc7496"
+  },
+  "자료/assets/idcards/3_park-toyang.png": {
+   "src": "회사 릴스/assets/idcards/3_park-toyang.png",
+   "sha256": "e9fff21313a79203cee4bb78fa9b80a6e23929f1efef52ecb10b7a12a886c43a"
+  },
+  "자료/assets/idcards/4_choi-taesan.png": {
+   "src": "회사 릴스/assets/idcards/4_choi-taesan.png",
+   "sha256": "f69156711821591ad72b0f1d80330446475ace760c52160e48c13df0476e99cc"
+  },
+  "자료/assets/idcards/5_lee-nancho.png": {
+   "src": "회사 릴스/assets/idcards/5_lee-nancho.png",
+   "sha256": "23e239d65b8f3e10373c4cf6e8c69ce1124d222f73d28456fa131726164229f8"
+  },
+  "자료/assets/idcards/6_jo-gunghwa.png": {
+   "src": "회사 릴스/assets/idcards/6_jo-gunghwa.png",
+   "sha256": "313357165403225ec1659ff68cd8f46e8fd20091aa07ecaa5302dcf332fcf4f7"
+  },
+  "자료/assets/idcards/all.png": {
+   "src": "회사 릴스/assets/idcards/all.png",
+   "sha256": "3150dbbd2b20bc88f6810cbbb0070ed8796ec021ad966824714a8402a9f1818e"
+  },
+  "자료/assets/nametags/1_kim-toto_sawon.png": {
+   "src": "회사 릴스/assets/nametags/1_kim-toto_sawon.png",
+   "sha256": "34b03d307eccc45aa94c0fdedfa04ff15a767e1703f5395db5db5c2d1700c8ae"
+  },
+  "자료/assets/nametags/2_lee-jeongwon_daeri.png": {
+   "src": "회사 릴스/assets/nametags/2_lee-jeongwon_daeri.png",
+   "sha256": "93819e124f2a56e34c13ba6cf7caf150b60966cf3c581ad037411a88fbff357f"
+  },
+  "자료/assets/nametags/3_park-toyang_daeri.png": {
+   "src": "회사 릴스/assets/nametags/3_park-toyang_daeri.png",
+   "sha256": "9522b0c7cee17a18594d9b17ee0aa9fab9c41f429e6ffa295fc82656d6e7965c"
+  },
+  "자료/assets/nametags/4_choi-taesan_gwajang.png": {
+   "src": "회사 릴스/assets/nametags/4_choi-taesan_gwajang.png",
+   "sha256": "3b6ed62b78fd0db98693c922bd36b401fe1b7e7aa8ae04087268cd1175b2c8ca"
+  },
+  "자료/assets/nametags/5_lee-nancho_chajang.png": {
+   "src": "회사 릴스/assets/nametags/5_lee-nancho_chajang.png",
+   "sha256": "58e4fe12084b9677c17fa71d5ff62f23554a2dace09671c133dd7001a527c9e6"
+  },
+  "자료/assets/nametags/6_jo-gunghwa_bujang.png": {
+   "src": "회사 릴스/assets/nametags/6_jo-gunghwa_bujang.png",
+   "sha256": "287c990ff56ac3f818180d0e97ff3c230326fd13ed5e5e785becbe1a978c7939"
+  },
+  "자료/episodes/ep1.json": {
+   "src": "회사 릴스/episodes/ep1.json",
+   "sha256": "5323f11c8ffd313eff908b30e0e5d34f8926dc0a17d5e242b202ebbe587ef124"
+  },
+  "자료/preview/ep1-1_preview.mp4": {
+   "src": "회사 릴스/preview/ep1-1_preview.mp4",
+   "sha256": "00e4c80f624a8e3011bb870bac8d0f4246c7443419320b83ce13915d18175c4a"
+  },
+  "자료/preview/ep1-2_preview.mp4": {
+   "src": "회사 릴스/preview/ep1-2_preview.mp4",
+   "sha256": "b72e5201756f77b6ea9c3078ef728b221264f1a17d62c73ca526079e9284b1cf"
+  },
+  "자료/preview/ep1-3_preview.mp4": {
+   "src": "회사 릴스/preview/ep1-3_preview.mp4",
+   "sha256": "81fd0e2d37f42c728b406e12e3b897aaf35d1d5816d0c70ebaeea00f86b0fb1b"
+  }
+ }
+}
